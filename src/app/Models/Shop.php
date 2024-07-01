@@ -25,10 +25,10 @@ class Shop extends Model
     {
         return $this->hasmany(Reservation::class);
     }
-    // public function genre()
-    // {
-    //     return $this->hasone(Genre::class);
-    // }
+    public function admin()
+    {
+        return $this->hasone(Admin::class);
+    }
     // public function region()
     // {
     //     return $this->hasone(Region::class);

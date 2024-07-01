@@ -51,6 +51,10 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+        'shopadmin' => [
+            'driver' => 'session',
+            'provider' => 'shopadmins',
+        ],
     ],
 
     /*
@@ -85,6 +89,10 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+        'shopadmins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Shopadmin::class,
+        ],
     ],
 
     /*
@@ -112,6 +120,12 @@ return [
         // 追加部分
         'admins' => [
             'provider' => 'admins',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'shopadmins' => [
+            'provider' => 'shopadmins',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

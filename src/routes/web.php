@@ -8,6 +8,9 @@ use App\Http\Controllers\ShopController;
 use App\Models\Reservation;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ShopAdminLoginController;
+use App\Http\Controllers\ShopAdminDashboardController;
+use App\Http\Controllers\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +45,12 @@ Route::post('/shop/confirm', [ReservationController::class, 'reservation_create'
 
 // 予約削除
 Route::post('/reservation/delete', [ReservationController::class, 'reservation_delete']);
+// 予約変更
+Route::post('/reservation/change', [ReservationController::class, 'reservation_change']);
+// 予約更新
+Route::post('/reservation/update', [ReservationController::class, 'update']);
+// レビュー入力画面
+Route::post('/reservation/review', [ReviewController::class, 'form']);
 
 // お気に入り登録
 Route::post('/favorites/create', [AuthController::class, 'favorites_create']);
@@ -66,14 +75,25 @@ Route::prefix('admin')->group(function () {
 
     Route::middleware('auth:admin')->group(function () {
         Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+        Route::get('dashboard/shop', [AdminDashboardController::class, 'shop']);
+        Route::post('dashboard/shop/create', [AdminDashboardController::class, 'shop_create']);
+        Route::get('dashboard/admin', [AdminDashboardController::class, 'admin']);
+        Route::post('dashboard/admin/create', [AdminDashboardController::class, 'admin_create']);
+    });
+
+});
+
+// 追加分
+Route::prefix('shopadmin')->group(function () {
+    Route::get('login', [ShopAdminLoginController::class, 'create'])->name('shopadmin.login');
+    Route::post('login', [ShopAdminLoginController::class, 'store']);
+
+    Route::middleware('auth:shopadmin')->group(function () {
+        Route::get('dashboard', [ShopAdminDashboardController::class, 'index'])->name('shopadmin.dashboard');
+        Route::get('dashboard/shop', [ShopAdminDashboardController::class, 'shop']);
+        Route::post('dashboard/shop/create', [ShopAdminDashboardController::class, 'shop_create']);
+        Route::get('dashboard/reservation', [ShopAdminDashboardController::class, 'reservation']);
     });
 });
 
-
-// Route::middleware(['auth:web', 'verified'])->get('/dashboard', function () {
-//     return view('dashboard');
-// })->name('dashboard');
-
-
-// 管理者ログイン画面
 

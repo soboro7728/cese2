@@ -5,9 +5,11 @@
 @endsection
 
 @section('content')
-管理者ログインできてるよ
+
+店舗管理者ログインできてるよ
 <br>
-<a href="dashboard/shop">店舗名登録</a>
+<a href="dashboard/shop">店舗情報登録</a>
 <br>
-<a href="dashboard/admin">店舗代表者登録</a>
+<a href="dashboard/reservation">予約確認</a>
+
 @endsection

@@ -23,5 +23,12 @@ class Authenticate extends Middleware
             }
             return route('login');
         }
+        
+        // if (!$request->expectsJson()) {
+        //     if ($request->is('shopadmin/*')) {
+        //         return route('shop.login');
+        //     }
+        //     return route('login');
+        // }
     }
 }

@@ -22,6 +22,16 @@
         <input type="hidden" name="id" value="{{ $reservation->id }}">
         <button class="date-nav__button">予約削除</button>
     </form>
+    <form class="form" action="/reservation/change" method="post">
+        @csrf
+        <input type="hidden" name="id" value="{{ $reservation->id }}">
+        <button class="date-nav__button">予約変更</button>
+    </form>
+    <form class="form" action="/reservation/review" method="post">
+        @csrf
+        <input type="hidden" name="id" value="{{ $reservation->id }}">
+        <button class="date-nav__button">レビューする</button>
+    </form>
 </div>
 @endforeach
 

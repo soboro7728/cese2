@@ -99,22 +99,64 @@ class ShopController extends Controller
         $genre_id = $request->genre_id;
         $genres = Genre::all();
         $regions = Region::all();
-        // $search = Shop::where('id', "$region_id")->first();
-        if(is_null($region_id) && is_null($genre_id)){
+        $auths = Auth::user();
+        // お気に入りの取得
+        if (isset($auths)) {
+            $auth_id = $auths->id;
+            $shop = Shop::with(['favorite' => function ($query) {
+                $auths = Auth::user();
+                $auth_id = $auths->id;
+                $query->where('user_id', $auth_id);
+            }])->get();
+            $auth_id = $auths->id;
+        }
+        // 非ログイン
+        else {
+            $shop = Shop::all();
+            $auth_id = null;
+        }
+        if (is_null($region_id) && is_null($genre_id)) {
             return redirect('/');
         } elseif (!is_null($region_id) && !is_null($genre_id)) {
-            $shops = Shop::where('region_id', "$region_id")->
-                where('genre_id', "$genre_id")->
-                get();
-            return view("index", compact('shops', 'genres', 'regions', 'region_id', 'genre_id'));
-        }elseif(!is_null($region_id)){
-            $shops = Shop::where('region_id', "$region_id")->get();
-            return view("index", compact('shops', 'genres', 'regions','region_id', 'genre_id'));
-        }elseif(!is_null($genre_id)){
-            $shops = Shop::where('genre_id', "$genre_id")->get();
-            return view("index", compact('shops', 'genres', 'regions', 'genre_id', 'region_id'));
+            $shops = $shop->where('region_id', "$region_id")->where('genre_id', "$genre_id");
+            return view("index", compact('shops', 'genres', 'regions', 'region_id','genre_id', 'auth_id'));
+        } elseif (!is_null($region_id)) {
+            $shops = $shop->where('region_id', "$region_id");
+            return view("index", compact('shops', 'genres', 'regions', 'region_id','genre_id', 'auth_id'));
+        } elseif (!is_null($genre_id)) {
+            $shops = $shop->where('genre_id', "$genre_id");
+            return view("index", compact('shops', 'genres', 'regions', 'genre_id','region_id', 'auth_id'));
         }
+
+
+
+
+        // $search = $regions->where('region', "大阪府");
+        // dd($search);
+
+        // if(is_null($region_id) && is_null($genre_id)){
+        //     return redirect('/');
+        // } elseif (!is_null($region_id) && !is_null($genre_id)) {
+        //     $shops = Shop::where('region_id', "$region_id")->
+        //         where('genre_id', "$genre_id")->
+        //         get();
+        //     return view("index", compact('shops', 'genres', 'regions', 'region_id', 'genre_id'));
+        // }elseif(!is_null($region_id)){
+        //     $shops = Shop::where('region_id', "$region_id")->get();
+        //     return view("index", compact('shops', 'genres', 'regions','region_id', 'genre_id'));
+        // }elseif(!is_null($genre_id)){
+        //     $shops = Shop::where('genre_id', "$genre_id")->get();
+        //     return view("index", compact('shops', 'genres', 'regions', 'genre_id', 'region_id'));
+        // }
     }
+
+
+
+
+
+
+
+
     // public function search_genre(Request $request)
     // {
     //     $genre_id = $request->genre_id;

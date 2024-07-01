@@ -1,3 +1,11 @@
+@extends('layouts.app')
+
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/index.css') }}">
+@endsection
+
+@section('content')
+
 test20240618
 <!DOCTYPE html>
 <html lang="ja">
@@ -57,3 +65,4 @@ test20240618
 </body>
 
 </html>
+@endsection

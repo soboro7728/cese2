@@ -17,9 +17,12 @@ class Reservation extends Model
         'number'
     ];
 
-    public function category()
+    public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function shop()
+    {
         return $this->belongsTo(Shop::class);
     }
 }

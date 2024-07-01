@@ -30,10 +30,15 @@
                                 @csrf
                                 <button class="header-nav__button">ログアウト</button>
                             </form>
-                        @endif
+                            @endif
                         </li>
                     </ul>
                 </nav>
+                <!-- 常時ログアウト -->
+                <form class="form" action="/logout" method="post">
+                    @csrf
+                    <button class="header-nav__button">ログアウト</button>
+                </form>
             </div>
         </div>
     </header>

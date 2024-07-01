@@ -8,6 +8,7 @@ use App\Models\Shop;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Models\Shoptime;
 
 
 
@@ -34,4 +35,25 @@ class ReservationController extends Controller
             $reservation->delete();
             return redirect('/mypage');
         }
+    public function reservation_change(Request $request)
+    {
+        $shoptimes = Shoptime::all();
+        $id = $request->id;
+        $reservation = Reservation::with('shop')
+        ->where('id', $id)
+        ->first();
+        return view("auth.change", compact('reservation', 'shoptimes'));
+    }
+    public function update(Request $request)
+    {
+        $reservation=Reservation::find($request->id);
+        $reservation->fill (
+            [
+                'date' => $request->date,
+                'time' => $request->time,
+                'number' => $request->number,
+        ]);
+        $reservation->save();
+        return view("test");
+    }
 }
