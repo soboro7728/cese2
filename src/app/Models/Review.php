@@ -14,4 +14,9 @@ class Review extends Model
         'stars',
         'comment',
     ];
+
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
+    }
 }

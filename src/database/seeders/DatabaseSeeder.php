@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(regionsTableSeeder::class);
         // $this->call(shoptimesTableSeeder::class);
         // $this->call(usersTableSeeder::class);
-        $this->call(adminsTableSeeder::class);
+        // $this->call(adminsTableSeeder::class);
+        // $this->call(reviewsTableSeeder::class);
     }
 }

@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use App\Models\Region;
 use App\Models\Genre;
 use App\Models\Shoptime;
+use App\Models\Review;
+use Illuminate\Support\Facades\DB;
 
 
 class ShopController extends Controller
@@ -48,6 +50,17 @@ class ShopController extends Controller
         $auths = Auth::user();
         $genres = Genre::all();
         $regions = Region::all();
+        $average = DB::table('reviews')
+        ->select('shop_id')
+        ->selectRaw('AVG(stars) AS stars')
+        // AS starsはカラム名？
+        ->groupBy('shop_id')
+        ->get();
+        // dd($average);
+        
+
+
+
         if(isset($auths)){
         $auth_id = $auths -> id;
         $shops = Shop::with(['favorite' => function ($query) {
@@ -58,12 +71,12 @@ class ShopController extends Controller
         // 検索条件
         $cond = ['user_id' => $auth_id,];
         $favorites = Favorite::where($cond)->get();
-        return view("index", compact('shops','favorites','auth_id', 'regions', 'genres'));
+        return view("index", compact('shops','favorites','auth_id', 'regions','genres', 'average'));
         }
         // 非ログイン
         else{
             $shops = Shop::all();
-            return view("index", compact('shops','regions', 'genres'));
+            return view("index", compact('shops','regions', 'genres', 'average'));
         }
     }
 

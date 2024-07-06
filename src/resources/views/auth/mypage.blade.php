@@ -29,7 +29,7 @@
     </form>
     <form class="form" action="/reservation/review" method="post">
         @csrf
-        <input type="hidden" name="id" value="{{ $reservation->id }}">
+        <input type="hidden" name="shop_id" value="{{ $reservation->shop_id }}">
         <button class="date-nav__button">レビューする</button>
     </form>
 </div>

@@ -82,7 +82,29 @@
             <input type="hidden" name="id" value="{{ $shop->id }}">
             <button class="date-nav__button">詳しくみる</button>
         </form>
+        <div>
+            <!-- 星関連 -->
+            @php
+            $shop_id = $shop->id;
+            $review= $average->
+            where('shop_id', $shop_id)->first();
+            if (!isset($review) ){
+            $star='--';
+            }else{
+            $stars=$review->stars;
+            $star = number_format($stars, 1);
+            }
+            @endphp
+            星{{ $star }}
+        </div>
+        <form class="form" action="/review" method="get">
+            @csrf
+            <input type="hidden" name="id" value="{{ $shop->id }}">
+            <button class="date-nav__button">レビューをみる</button>
+        </form>
     </div>
+
+
     @if (!isset($auth_id) ){
     echo('ログインしてないよ');
     }

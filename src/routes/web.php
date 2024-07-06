@@ -34,6 +34,9 @@ Route::get('/test', [shopController::class, 'test']);
 Route::get('/', [shopController::class, 'index']);
 Route::get('/detail', [shopController::class, 'detail']);
 
+// レビュー表示
+Route::get('/review', [ReviewController::class, 'index']);
+
 // 店舗登録
 Route::get('shop/register', [shopController::class, 'shop_register']);
 // 確認画面遷移
@@ -51,6 +54,8 @@ Route::post('/reservation/change', [ReservationController::class, 'reservation_c
 Route::post('/reservation/update', [ReservationController::class, 'update']);
 // レビュー入力画面
 Route::post('/reservation/review', [ReviewController::class, 'form']);
+// レビュー投稿
+Route::post('/review/create', [ReviewController::class, 'create']);
 
 // お気に入り登録
 Route::post('/favorites/create', [AuthController::class, 'favorites_create']);
