@@ -12,7 +12,9 @@ use App\Models\Region;
 use App\Models\Genre;
 use App\Models\Shoptime;
 use App\Models\Review;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use App\Models\Reservation;
 
 
 class ShopController extends Controller
@@ -176,4 +178,14 @@ class ShopController extends Controller
     //         return view("index", compact('shops', 'genres', 'regions','genre_id', 'region_id'));
     //     }
     // }
+    public function test()
+    {
+        $today = Carbon::today();
+        $reservations = Reservation::with('user')
+            ->with('shop')
+            ->wheredate('date', $today)
+            ->get();
+            dd($reservations);
+        return view('test');
+    }
 }
