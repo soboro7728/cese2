@@ -40,13 +40,7 @@ class ShopController extends Controller
     }
     public function index()
     {
-        // $shops = Shop::all();
-        // $test = Favorite::where('user_id', '=', 2)->get();
-        // $shops = Shop::with('favorite')->get();
-
-        // $shops = Shop::with(['favorite' => function ($query) {
-        //     $query->where('user_id', '1');
-        // }])->get();
+        
         $auths = Auth::user();
         $genres = Genre::all();
         $regions = Region::all();
@@ -57,8 +51,6 @@ class ShopController extends Controller
         ->groupBy('shop_id')
         ->get();
         // dd($average);
-        
-
 
 
         if(isset($auths)){

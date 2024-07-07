@@ -21,8 +21,6 @@ class AuthController extends Controller
         $shops = Shop::all();
         $reservations = Reservation::where('user_id', $auth_id)->get();
         $favorites = Favorite::where('user_id', $auth_id)->get();
-
-
         return view('auth.mypage', compact('shops','reservations', 'favorites'));
     }
 
@@ -54,5 +52,11 @@ class AuthController extends Controller
     public function admin_login()
     {
         return view('admin.login');
+    }
+
+    // メール確認画面
+    public function verify()
+    {
+        return view('auth.verify-email');
     }
 }

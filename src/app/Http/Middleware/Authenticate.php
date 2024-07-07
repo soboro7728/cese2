@@ -21,13 +21,18 @@ class Authenticate extends Middleware
             if ($request->is('admin/*')) {
                 return route('admin.login');
             }
-            return route('login');
+            if ($request->is('shopadmin/*')) {
+                return route('shopadmin.login');
+            }
+            if ($request->is('/*')) {
+                return route('guest');
+            }
+            // return route('login');
+            // return route('guest');
         }
         
         // if (!$request->expectsJson()) {
-        //     if ($request->is('shopadmin/*')) {
-        //         return route('shop.login');
-        //     }
+            
         //     return route('login');
         // }
     }

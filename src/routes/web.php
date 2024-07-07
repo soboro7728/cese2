@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ShopAdminLoginController;
 use App\Http\Controllers\ShopAdminDashboardController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\GuestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,15 +24,13 @@ use App\Http\Controllers\ReviewController;
 |
 */
 
-Route::middleware('auth')->group(function () {
-    // Route::get('/', [AuthController::class, 'index']);
-    // マイページ
+Route::middleware('verified')->group(function () {
     Route::get('/mypage', [AuthController::class, 'index']);
+    Route::get('/', [shopController::class, 'index']);
 });
 Route::post('/shop/create', [shopController::class, 'shop_create']);
 
 Route::get('/test', [shopController::class, 'test']);
-Route::get('/', [shopController::class, 'index']);
 Route::get('/detail', [shopController::class, 'detail']);
 
 // レビュー表示
@@ -101,4 +100,8 @@ Route::prefix('shopadmin')->group(function () {
     });
 });
 
+// メール認証確認画面
+Route::get('/verify', [AuthController::class, 'verify']);
+// ログインリダイレクト先
+Route::get('/guest', [GuestController::class, 'index'])->name('guest');
 
