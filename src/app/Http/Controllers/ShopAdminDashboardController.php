@@ -9,6 +9,9 @@ use App\Models\Genre;
 use App\Models\Shop;
 use App\Models\Reservation;
 use App\Models\User;
+use App\Models\Favorite;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ShopMail;
 
 class ShopAdminDashboardController extends Controller
 {
@@ -59,5 +62,24 @@ class ShopAdminDashboardController extends Controller
         ->where('shop_id', $shop_id)
         ->get();
         return view('shop.reservation', compact('genres', 'regions', 'reservations'));
+    }
+    public function mail()
+    {
+        return view('shop.mail');
+    }
+    public function send(Request $request)
+    {
+        $auth = Auth::user();
+        $shop_id = $auth->shop_id;
+        $favorites = Favorite::with('user')
+            ->where('shop_id', $shop_id)
+            ->get();
+        $inputs = $request;
+        // foreach ($favorites as $favorite) {
+        //     return Mail::to($favorite->user->email)->send(new ShopMail($inputs));
+        // }
+        return Mail::to('user@user.users')->send(new ShopMail($inputs));
+        dd($inputs);
+        return redirect();
     }
 }

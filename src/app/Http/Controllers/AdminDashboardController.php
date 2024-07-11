@@ -8,6 +8,7 @@ use App\Models\Region;
 use App\Models\Genre;
 use App\Models\Shop;
 use App\Models\Shopadmin;
+use Illuminate\Support\Facades\Hash;
 
 class AdminDashboardController extends Controller
 {
@@ -42,7 +43,7 @@ class AdminDashboardController extends Controller
         $admin = [
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
             'shop_id' => $request->shop_id,
         ];
         Shopadmin::create($admin);

@@ -97,6 +97,8 @@ Route::prefix('shopadmin')->group(function () {
         Route::get('dashboard/shop', [ShopAdminDashboardController::class, 'shop']);
         Route::post('dashboard/shop/create', [ShopAdminDashboardController::class, 'shop_create']);
         Route::get('dashboard/reservation', [ShopAdminDashboardController::class, 'reservation']);
+        Route::get('dashboard/mail', [ShopAdminDashboardController::class, 'mail']);
+        Route::post('dashboard/mail', [ShopAdminDashboardController::class, 'send']);
     });
 });
 
