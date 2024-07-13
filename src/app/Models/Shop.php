@@ -29,17 +29,18 @@ class Shop extends Model
     {
         return $this->hasone(Admin::class);
     }
-    // public function region()
-    // {
-    //     return $this->hasone(Region::class);
-    // }
-    public function category()
+    public function genre()
     {
         return $this->belongsTo(Genre::class);
     }
-    // public function region()
-    // {
-    //     return $this->hasone(Region::class);
-    // }
-
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+    public function scopeKeywordSearch($query, $keyword)
+    {
+        if (!empty($keyword)) {
+            $query->where('name', 'like', '%' . $keyword . '%');
+        }
+    }
 }

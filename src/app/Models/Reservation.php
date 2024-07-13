@@ -14,7 +14,8 @@ class Reservation extends Model
         'shop_id',
         'date',
         'time',
-        'number'
+        'number',
+        'review'
     ];
 
     public function user()

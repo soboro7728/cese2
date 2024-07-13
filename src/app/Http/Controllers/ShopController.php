@@ -42,7 +42,6 @@ class ShopController extends Controller
     }
     public function index()
     {
-        
         $auths = Auth::user();
         $genres = Genre::all();
         $regions = Region::all();
@@ -52,9 +51,6 @@ class ShopController extends Controller
         // AS starsはカラム名？
         ->groupBy('shop_id')
         ->get();
-        // dd($average);
-
-
         if(isset($auths)){
         $auth_id = $auths -> id;
         $shops = Shop::with(['favorite' => function ($query) {
@@ -134,58 +130,11 @@ class ShopController extends Controller
             $shops = $shop->where('genre_id', "$genre_id");
             return view("index", compact('shops', 'genres', 'regions', 'genre_id','region_id', 'auth_id'));
         }
-
-
-
-
-        // $search = $regions->where('region', "大阪府");
-        // dd($search);
-
-        // if(is_null($region_id) && is_null($genre_id)){
-        //     return redirect('/');
-        // } elseif (!is_null($region_id) && !is_null($genre_id)) {
-        //     $shops = Shop::where('region_id', "$region_id")->
-        //         where('genre_id', "$genre_id")->
-        //         get();
-        //     return view("index", compact('shops', 'genres', 'regions', 'region_id', 'genre_id'));
-        // }elseif(!is_null($region_id)){
-        //     $shops = Shop::where('region_id', "$region_id")->get();
-        //     return view("index", compact('shops', 'genres', 'regions','region_id', 'genre_id'));
-        // }elseif(!is_null($genre_id)){
-        //     $shops = Shop::where('genre_id', "$genre_id")->get();
-        //     return view("index", compact('shops', 'genres', 'regions', 'genre_id', 'region_id'));
-        // }
     }
-
-
-
-
-
-
-
-
-    // public function search_genre(Request $request)
-    // {
-    //     $genre_id = $request->genre_id;
-    //     $region_id = $request->region_id;
-    //     // $search = Shop::where('id', "$genre_id")->first();
-    //     $genres = Genre::all();
-    //     $regions = Region::all();
-    //     if (is_null($genre_id)) {
-    //         return redirect('/');
-    //     } else {
-    //         $shops = Shop::where('genre_id', "$genre_id")->get();
-    //         return view("index", compact('shops', 'genres', 'regions','genre_id', 'region_id'));
-    //     }
-    // }
-    public function test()
+    public function search_keyword(Request $request)
     {
-        $today = Carbon::today();
-        $reservations = Reservation::with('user')
-            ->with('shop')
-            ->wheredate('date', $today)
-            ->get();
-            dd($reservations);
-        return view('test');
+        $shops = Shop::with('favorite')
+        ->KeywordSearch($request->keyword)->get();
+        return redirect()->route('index')->with(compact('seachshops'));
     }
 }

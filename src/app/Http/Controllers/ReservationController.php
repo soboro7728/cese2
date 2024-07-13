@@ -9,13 +9,14 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
 use App\Models\Shoptime;
+use App\Http\Requests\ReservationRequest;
 
 
 
 class ReservationController extends Controller
 {
     //店舗登録欄
-    public function reservation_create(Request $request)
+    public function reservation_create(ReservationRequest $request)
     {
         $auths = Auth::user();
         $reservation = [
@@ -44,7 +45,7 @@ class ReservationController extends Controller
         ->first();
         return view("auth.change", compact('reservation', 'shoptimes'));
     }
-    public function update(Request $request)
+    public function update(ReservationRequest $request)
     {
         $reservation=Reservation::find($request->id);
         $reservation->fill (
@@ -54,6 +55,6 @@ class ReservationController extends Controller
                 'number' => $request->number,
         ]);
         $reservation->save();
-        return view("test");
+        return view("shop.thanks");
     }
 }

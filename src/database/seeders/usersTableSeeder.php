@@ -21,6 +21,7 @@ class usersTableSeeder extends Seeder
             'name' => '一般ユーザー',
             'email' => 'user@user.user',
             'password' => Hash::make('password'),
+            'email_verified_at' => '2024-01-01 00:00:00'
         ]);
     }
 }

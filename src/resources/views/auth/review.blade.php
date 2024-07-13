@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+<link rel="stylesheet" href="{{ asset('css/review.css') }}">
 @endsection
 
 @section('content')
-レヴュー画面だよ
+
 
 <form class="review" action="/review/create" method="post">
     @csrf
-    <h3>{{ $shop->name }}のレビュー投稿</h3>
-    <h4>スター</h4>
+    <h3>{{ $reservation->shop->name }}のレビュー投稿</h3>
+    <h4>評価</h4>
     <div>
         <input type="radio" name="stars" value="5" />
         <label for="starChoice">星5</label><br>
@@ -24,9 +24,10 @@
         <label for="starChoice">星1</label><br>
     </div>
     <h4>コメント</h4>
-    <input type="text" name="comment" value="{{ old('detail') }}" />
+    <textarea class="comment__form" type="text" name="comment" value="{{ old('detail') }}"></textarea>
     <br>
-    <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+    <input type="hidden" name="shop_id" value="{{ $reservation->shop->id }}">
+    <input type="hidden" name="reservation_id" value="{{ $reservation->id }}">
     <div class="review__button">
         <button class="review__button-submit" type="submit">投稿する</button>
     </div>

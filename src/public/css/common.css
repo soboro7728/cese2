@@ -1,0 +1,142 @@
+html,
+body {
+    height: 100%;
+    background-color: #EEEEEE;
+    margin: 0;
+    /* 解決するため */
+    padding: 0;
+    /* 入れておくと無難 */
+}
+
+/* 文字 */
+body,
+textarea,
+input {
+    color: black;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    background-color: #EEEEEE;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.logo {
+    font-size: 40px;
+    margin-left: 30px;
+    color: #3560F6;
+    font-weight: bold;
+}
+
+
+.drawer_hidden {
+    display: none;
+}
+
+
+.drawer_open {
+    display: flex;
+    height: 45px;
+    width: 45px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 100;
+
+    cursor: pointer;
+    background-color: #3560F6;
+}
+
+
+.drawer_open span,
+.drawer_open span:before,
+.drawer_open span:after {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 25px;
+    border-radius: 3px;
+    background: white;
+    transition: 0.5s;
+    position: absolute;
+}
+
+
+.drawer_open span:before {
+    bottom: 8px;
+    width: 12px;
+}
+
+
+.drawer_open span:after {
+    top: 8px;
+    width: 6px;
+}
+
+
+#drawer_input:checked~.drawer_open span {
+    background: rgba(255, 255, 255, 0);
+}
+
+
+#drawer_input:checked~.drawer_open span::before {
+    bottom: 0;
+    transform: rotate(45deg);
+    width: 25px;
+}
+
+#drawer_input:checked~.drawer_open span::after {
+    top: 0;
+    transform: rotate(-45deg);
+    width: 25px;
+}
+
+
+.nav_content {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 100%;
+    /* メニューを画面の外に飛ばす */
+    z-index: 99;
+    background: #fff;
+    transition: .5s;
+}
+
+
+.nav_list {
+    list-style: none;
+    text-align: center;
+    margin-top: 15%;
+}
+a {
+    text-decoration: none;
+    color: #3560F6;
+    font-weight: bold;
+}
+
+.nav_item {
+    margin-bottom: 50px;
+    font-size: 30px;
+}
+
+
+#drawer_input:checked~.nav_content {
+    left: 0;
+    /* メニューを画面に入れる */
+}
+
+.link-style-btn {
+    cursor: pointer;
+        border: none;
+        background: none;
+        color: #3560F6;
+        font-size: 30px;
+        font-weight: bold;
+}
+

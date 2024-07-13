@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+<link rel="stylesheet" href="{{ asset('css/review.css') }}">
 @endsection
 
 @section('content')
-レビュー一覧画面だよ
+<h1 class="shop_review">レビュー一覧</h1>
 @foreach ($reviews as $review)
 <div class="review">
     <div class="review_stars">

@@ -17,7 +17,7 @@ class Region extends Model
     // {
     //     return $this->hasmany(Shop::class);
     // }
-    public function category()
+    public function shop()
     {
         return $this->belongsTo(Shop::class);
     }

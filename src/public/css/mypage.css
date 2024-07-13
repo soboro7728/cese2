@@ -1,7 +1,8 @@
 .card {
-    width: 360px;
-    margin: 100px auto 0;
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+    width: 350px;
+        margin: 10px 0 10px 10px;
+        box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+        background-color: #fff;
 }
 
 .card__img img {
@@ -13,9 +14,9 @@
 }
 
 .card__content-ttl {
-    font-size: 18px;
-    margin-bottom: 30px;
-    font-weight: 400;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0;
 }
 
 .card__content-cat {
@@ -30,12 +31,55 @@
 
 .card__content-tag {
     font-size: 14px;
-    text-align: right;
-    /* 親要素にtext-alignを適用すると子要素のinline-block要素に適応される */
+    text-align: left;
 }
 
 .card__content-tag-item {
     display: inline-block;
-    /* 横並びにするためにinline-blockを指定 */
-    color: #008888;
+}
+.mypage__content{
+    width: 95%;
+    min-width: 1200px;
+    margin: 0 auto;
+
+}
+.mypage__name{
+    margin-left: 40%;
+}
+.mypage__content__pannel{
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+.reservation{
+    width: 30%;
+}
+.reservation_card{
+    background-color:#3560F6 ;
+    padding: 20px;
+    margin-top: 30px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    color: #fff;
+}
+.reservation_card__content{
+    display: flex;
+}
+
+.reservation_card__content-tag{
+    margin-left: 30px;
+}
+.favorite{
+    width: 60%;
+}
+
+.favorite__card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.card__content__form{
+    display: flex;
+    justify-content: space-between;
+
 }

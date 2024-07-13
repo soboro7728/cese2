@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,7 +19,6 @@ class adminsTableSeeder extends Seeder
         Admin::create([
             'name' => '管理者',
             'email' => 'admin@admin.admin',
-            'shop_id' => '1',
             'password' => Hash::make('password')
         ]);
     }

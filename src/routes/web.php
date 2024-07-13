@@ -26,9 +26,13 @@ use App\Http\Controllers\GuestController;
 
 Route::middleware('verified')->group(function () {
     Route::get('/mypage', [AuthController::class, 'index']);
-    Route::get('/', [shopController::class, 'index']);
+    
 });
 Route::post('/shop/create', [shopController::class, 'shop_create']);
+Route::get('/', [shopController::class, 'index'])->name('index');
+
+
+
 
 Route::get('/test', [shopController::class, 'test']);
 Route::get('/detail', [shopController::class, 'detail']);
@@ -40,10 +44,6 @@ Route::get('/review', [ReviewController::class, 'index']);
 Route::get('shop/register', [shopController::class, 'shop_register']);
 // 確認画面遷移
 Route::post('/shop/confirm', [ReservationController::class, 'reservation_create']);
-
-// マイページ
-// Route::get('/mypage', [AuthController::class, 'index']);
-
 
 // 予約削除
 Route::post('/reservation/delete', [ReservationController::class, 'reservation_delete']);
@@ -60,10 +60,12 @@ Route::post('/review/create', [ReviewController::class, 'create']);
 Route::post('/favorites/create', [AuthController::class, 'favorites_create']);
 // お気に入り解除
 Route::post('/favorites/delete', [AuthController::class, 'favorites_delete']);
+// お気に入り解除マイページ向け
+Route::post('/favorites/delete/mypage', [AuthController::class, 'favorites_delete_mypage']);
 // 地域検索
 Route::get('/search/region', [shopController::class, 'search_region']);
 // ジャンル検索
-// Route::get('/search/genre', [shopController::class, 'search_genre']);
+Route::get('/search/keyword', [shopController::class, 'search_keyword']);
 
 // 管理者ミドルウェア
 Route::prefix('admin')->group(function () {
@@ -104,6 +106,8 @@ Route::prefix('shopadmin')->group(function () {
 
 // メール認証確認画面
 Route::get('/verify', [AuthController::class, 'verify']);
-// ログインリダイレクト先
-Route::get('/guest', [GuestController::class, 'index'])->name('guest');
+// 一般ユーザーむけ
+// Route::middleware('guest')->group(function () {
+//     Route::get('/', [shopController::class, 'index'])->name('guest');
+// });
 

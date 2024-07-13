@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+<link rel="stylesheet" href="{{ asset('css/thanks.css') }}">
 @endsection
 
 @section('content')
-レビュー投稿完了画面だよ
-
-
+<div class="confirm_content">
+    <p class="confirm_text">投稿ありがとうございます</p>
+    <a href="/mypage" class="confirm_button">戻る</a>
+</div>
 @endsection

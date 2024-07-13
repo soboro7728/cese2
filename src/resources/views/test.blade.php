@@ -1,68 +1,40 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/index.css') }}">
+<link rel="stylesheet" href="{{ asset('css/test.css') }}">
 @endsection
 
 @section('content')
-
-test20240618
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="UTF-8">
-    <title>test</title>
-</head>
+<!-- HTMLコード -->
 
 <body>
+    <header class="header">
 
-    <!-- <br>
-    <label>
-        <input type="date" id="input_date" name="date" value="" required="required" onchange="inputCheck()" />
-        <br>
-        <input type="time" name="time" id="input_time" value="" required="required" onchange="inputChecktime()" />
-        <br>
-        <input type="number" name="number" id="input_number" min="1" value="" required="required" onchange="inputChecknumber()" />
-        <br> </label>
-    <p id="date_check"></p>
-    <p id="time_check"></p>
-    <p id="number_check"></p>
-    <br>
+        <!-- ハンバーガーメニュー部分 -->
+        <div class="nav">
 
-    <script>
-        function inputCheck() {
-            var inputValue = document.getElementById("input_date").value;
-            document.getElementById("date_check").innerHTML = 'Date  ：　' + inputValue;
-        }
+            <!-- ハンバーガーメニューの表示・非表示を切り替えるチェックボックス -->
+            <input id="drawer_input" class="drawer_hidden" type="checkbox">
 
-        function inputChecktime() {
-            var inputValue = document.getElementById("input_time").value;
-            document.getElementById("time_check").innerHTML = 'Time  ：　' + inputValue;
-        }
+            <!-- ハンバーガーアイコン -->
+            <label for="drawer_input" class="drawer_open"><span></span></label>
 
-        function inputChecknumber() {
-            var inputValue = document.getElementById("input_date").value;
-            document.getElementById("number_check").innerHTML = 'Number  ：　' + inputValue;
-        }
-    </script> -->
-    <form id="submit_form" action="/">
-        <select id="submit_item">
-            <option value="人気順">人気順</option>
-            <option value="新しい順">新しい順</option>
-            <option value="古い順">古い順</option>
-        </select>
-    </form>
+            <!-- メニュー -->
+            <nav class="nav_content">
+                <ul class="nav_list">
+                    <li class="nav_item"><a href="">メニュー1</a></li>
+                    <li class="nav_item"><a href="">メニュー2</a></li>
+                    <li class="nav_item"><a href="">メニュー3</a></li>
+                </ul>
+            </nav>
 
-    <form action="/" method="get">
-        @csrf
-        <select onchange="submit(this.form)" type="search_year" name="search_year">
-            <option value="人気順">人気順</option>
-            <option value="新しい順">新しい順</option>
-            <option value="古い順">古い順</option>
-        </select>
-    </form>
+        </div>
+        <div class="logo">Rese</div>
+    </header>
 </body>
 
-</html>
+
+
+
+
 @endsection

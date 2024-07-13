@@ -39,6 +39,7 @@ class ShopAdminDashboardController extends Controller
     {
         // name属性が'thumbnail'のinputタグをファイル形式に、画像をpublic/avatarに保存
         $image = $request->file('thumbnail')->store('public/image/');
+        dd($image);
         $image_path = basename($image);
         $auth = Auth::user();
         $shop_id = $auth->shop_id;
@@ -75,11 +76,9 @@ class ShopAdminDashboardController extends Controller
             ->where('shop_id', $shop_id)
             ->get();
         $inputs = $request;
-        // foreach ($favorites as $favorite) {
-        //     return Mail::to($favorite->user->email)->send(new ShopMail($inputs));
-        // }
-        return Mail::to('user@user.users')->send(new ShopMail($inputs));
-        dd($inputs);
-        return redirect();
+        foreach ($favorites as $favorite) {
+            Mail::to($favorite->user->email)->send(new ShopMail($inputs));
+        }
+        return redirect('/shopadmin/dashboard/mail');
     }
 }

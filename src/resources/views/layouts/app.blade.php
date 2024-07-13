@@ -13,34 +13,34 @@
 
 <body>
     <header class="header">
-        <div class="header__inner">
-            <div class="header-utilities">
-                <a class="header__logo" href="/">
-                    てすと
-                </a>
-                <nav>
-                    <ul class="header-nav">
-                        @if (Auth::check())
-                        <!-- ログインチェック -->
-                        <li class="header-nav__item">
-                            <a class="header-nav__link" href="/mypage">マイページ</a>
-                        </li>
-                        <li class="header-nav__item">
-                            <form class="form" action="/logout" method="post">
-                                @csrf
-                                <button class="header-nav__button">ログアウト</button>
-                            </form>
-                            @endif
-                        </li>
-                    </ul>
-                </nav>
-                <!-- 常時ログアウト -->
-                <form class="form" action="/logout" method="post">
-                    @csrf
-                    <button class="header-nav__button">ログアウト</button>
-                </form>
-            </div>
+        <div class="nav">
+            <input id="drawer_input" class="drawer_hidden" type="checkbox">
+            <label for="drawer_input" class="drawer_open"><span></span></label>
+            <!-- メニュー -->
+            @if( Auth::check() )
+            <nav class="nav_content">
+                <ul class="nav_list">
+                    <li class="nav_item"><a href="/">Home</a></li>
+                    <li class="nav_item">
+                        <form class="form" action="/logout" method="post">
+                            @csrf
+                            <button class="link-style-btn">Logout</button>
+                        </form>
+                    </li>
+                    <li class="nav_item"><a href="/mypage">Mypage</a></li>
+                </ul>
+            </nav>
+            @else
+            <nav class="nav_content">
+                <ul class="nav_list">
+                    <li class="nav_item"><a href="/">Home</a></li>
+                    <li class="nav_item"><a href="/register">Registration</a></li>
+                    <li class="nav_item"><a href="/login">Login</a></li>
+                </ul>
+            </nav>
+            @endif
         </div>
+        <div class="logo">Rese</div>
     </header>
 
     <main>
