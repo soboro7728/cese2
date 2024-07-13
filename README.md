@@ -1,6 +1,7 @@
 # 飲食店予約アプリ  
 店舗情報の一覧と予約管理機能
-![image](https://github.com/soboro7728/case1/assets/49304045/03ba43a2-e935-450f-bb54-8485a9d5690c)
+![スクリーンショット 2024-07-13 225623](https://github.com/user-attachments/assets/1803c306-ae16-4291-a053-f7f55dcb163c)
+
 
 ## ログインテスト用アカウント  
 メールアドレス  user@user.user  
@@ -29,7 +30,10 @@ url http://localhost/shopadmin/login
 - 店舗情報更新  
 店舗情報の更新
 - 予約一覧  
-予約の一覧
+予約の一覧  
+- メール送信   
+お気に入りユーザーに一斉メールを送信　
+リマインダーメール（予約当日の10時に送信）
 
 **2　管理者向け機能**  
 
@@ -50,11 +54,12 @@ URl http://localhost/admin/login
 - MySQL8.0.26
 
 ## テーブル設計  
-![スクリーンショット 2024-04-01 041031](https://github.com/soboro7728/case1/assets/49304045/093ed5ba-bc2e-4c19-bda3-91f9db16b245)
+![table](https://github.com/user-attachments/assets/3652d6a8-e9ba-4db5-9df6-b73c01426277)
 
 
 ## ER図
-![スクリーンショット 2024-04-01 041742](https://github.com/soboro7728/case1/assets/49304045/efc5f22e-cc1a-45b0-97c1-98458b34c17d)
+![case2](https://github.com/user-attachments/assets/939cb2a5-18e7-46c1-ad09-51f2a5c7f96c)
+
 
 
 
