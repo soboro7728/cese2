@@ -61,9 +61,6 @@
     </form>
     @endif
 </div>
-
-
-
 @foreach ($shops as $shop)
 <div class="card">
     <div class="card__img">
@@ -103,8 +100,6 @@
             <button class="date-nav__button">レビューをみる</button>
         </form>
     </div>
-
-
     @if (!isset($auth_id) ){
     echo('ログインしてないよ');
     }
@@ -123,15 +118,4 @@
     @endif
 </div>
 @endforeach
-
-
-
-
-
-
-
-
-
-
-
 @endsection

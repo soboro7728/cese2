@@ -7,14 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Carbon\Carbon;
 use App\Models\Region;
 use App\Models\Genre;
 use App\Models\Shoptime;
-use App\Models\Review;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
-use App\Models\Reservation;
 
 
 class ShopController extends Controller
@@ -57,7 +53,7 @@ class ShopController extends Controller
             $auths = Auth::user();
             $auth_id = $auths->id;
             $query->where('user_id', $auth_id);
-        }])->get();
+        }])->with('region')->with('genre')->get();
         // 検索条件
         $cond = ['user_id' => $auth_id,];
         $favorites = Favorite::where($cond)->get();
@@ -65,8 +61,8 @@ class ShopController extends Controller
         }
         // 非ログイン
         else{
-            $shops = Shop::all();
-            return view("index", compact('shops','regions', 'genres', 'average'));
+            $shops = Shop::with('region')->with('genre')->get();
+            return view("index", compact('shops', 'regions', 'genres', 'average'));
         }
     }
 
@@ -80,22 +76,6 @@ class ShopController extends Controller
         $shop = Shop::where('id', "$shop_id")->first();
         return view("shop.detail", compact('shop','auths', 'regions','genres', 'shoptimes'));
     }
-    // public function confirm(Request $request)
-    // {
-    //     if($request->date == $request->old_date
-    //     && $request->time == $request->old_time
-    //     && $request->number == $request->old_number
-    //     ){
-    //         dd($request);
-    //         return view("shop.thanks");
-    //     }
-    //     else{
-    //         $shop_id = $request->id;
-    //         $input = $request;
-    //         $shop = Shop::where('id', "$shop_id")->first();
-    //         return view("shop.detail", compact('shop', 'input'));
-    //     }
-    // }
     public function search_region(Request $request)
     {
         $region_id = $request->region_id;
@@ -103,6 +83,12 @@ class ShopController extends Controller
         $genres = Genre::all();
         $regions = Region::all();
         $auths = Auth::user();
+        $average = DB::table('reviews')
+        ->select('shop_id')
+        ->selectRaw('AVG(stars) AS stars')
+        // AS starsはカラム名？
+        ->groupBy('shop_id')
+        ->get();
         // お気に入りの取得
         if (isset($auths)) {
             $auth_id = $auths->id;
@@ -110,31 +96,53 @@ class ShopController extends Controller
                 $auths = Auth::user();
                 $auth_id = $auths->id;
                 $query->where('user_id', $auth_id);
-            }])->get();
+            }])->with('region')->with('genre')->get();
             $auth_id = $auths->id;
         }
         // 非ログイン
         else {
-            $shop = Shop::all();
+            $shop = Shop::With('region')->with('genre')->get();
             $auth_id = null;
         }
         if (is_null($region_id) && is_null($genre_id)) {
             return redirect('/');
         } elseif (!is_null($region_id) && !is_null($genre_id)) {
             $shops = $shop->where('region_id', "$region_id")->where('genre_id', "$genre_id");
-            return view("index", compact('shops', 'genres', 'regions', 'region_id','genre_id', 'auth_id'));
+            return view("index", compact('shops', 'genres', 'regions', 'region_id','genre_id','auth_id', 'average'));
         } elseif (!is_null($region_id)) {
             $shops = $shop->where('region_id', "$region_id");
-            return view("index", compact('shops', 'genres', 'regions', 'region_id','genre_id', 'auth_id'));
+            return view("index", compact('shops', 'genres', 'regions', 'region_id','genre_id','auth_id', 'average'));
         } elseif (!is_null($genre_id)) {
             $shops = $shop->where('genre_id', "$genre_id");
-            return view("index", compact('shops', 'genres', 'regions', 'genre_id','region_id', 'auth_id'));
+            return view("index", compact('shops', 'genres', 'regions', 'genre_id','region_id','auth_id', 'average'));
         }
     }
     public function search_keyword(Request $request)
     {
-        $shops = Shop::with('favorite')
-        ->KeywordSearch($request->keyword)->get();
-        return redirect()->route('index')->with(compact('seachshops'));
+        $genres = Genre::all();
+        $regions = Region::all();
+        $auths = Auth::user();
+        $average = DB::table('reviews')
+        ->select('shop_id')
+        ->selectRaw('AVG(stars) AS stars')
+        // AS starsはカラム名？
+        ->groupBy('shop_id')
+        ->get();
+        // お気に入りの取得
+        if (isset($auths)) {
+            $auth_id = $auths->id;
+            $shops = Shop::with(['favorite' => function ($query) {
+                $auths = Auth::user();
+                $auth_id = $auths->id;
+                $query->where('user_id', $auth_id);
+            }])->with('region')->with('genre')->KeywordSearch($request->keyword)->get();
+            $auth_id = $auths->id;
+        }
+        // 非ログイン
+        else {
+            $shops = Shop::With('region')->with('genre')->KeywordSearch($request->keyword)->get();
+            $auth_id = null;
+        }
+        return view("index", compact('shops', 'genres', 'regions', 'auth_id', 'average'));
     }
 }

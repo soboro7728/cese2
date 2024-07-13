@@ -19,7 +19,7 @@ class CreateShopsTable extends Migration
             $table->string('region_id')->constrained()->cascadeOnDelete();
             $table->string('genre_id')->constrained()->cascadeOnDelete();
             $table->string('image_path')->nullable();
-            $table->string('detail')->nullable();
+            $table->text('detail')->nullable();
             $table->timestamps();
         });
     }

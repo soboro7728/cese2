@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Shop;
 use App\Models\Region;
 use App\Models\Genre;
-use App\Models\User;
 use Carbon\Carbon;
 
 class AuthController extends Controller
@@ -61,17 +60,5 @@ class AuthController extends Controller
         $cond = ['user_id' => $user_id, 'shop_id' => $shop_id];
         favorite::where($cond)->delete();
         return redirect('/mypage');
-    }
-
-    // test
-    public function admin_login()
-    {
-        return view('admin.login');
-    }
-
-    // メール確認画面
-    public function verify()
-    {
-        return view('auth.verify-email');
     }
 }

@@ -8,7 +8,6 @@ use App\Models\Region;
 use App\Models\Genre;
 use App\Models\Shop;
 use App\Models\Reservation;
-use App\Models\User;
 use App\Models\Favorite;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ShopMail;

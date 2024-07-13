@@ -33,9 +33,8 @@
         </form>
         @endif
     </div>
-
     <!-- 検索 -->
-    <div>
+    <div class="index__search">
         @if(isset($genre_id))
         <form id="submit_form" action="/search/region" method="get">
             <select onchange="submit(this.form)" name="genre_id">
@@ -66,10 +65,6 @@
             <input class="search-form__item-input" type="text" name="keyword" value="{{ old('keyword') }}">
         </form>
     </div>
-
-
-
-
     <div class="index__item">
         @foreach ($shops as $shop)
         <div class="index__card">
@@ -96,8 +91,8 @@
                     星{{ $star }}
                 </div>
                 <div class="card__content-tag">
-                    <p class="card__content-tag-item">#{{ $regions[$shop->region_id-1]->region }}</p>
-                    <p class="card__content-tag-item">#{{ $genres[$shop->genre_id-1]->genre }}</p>
+                    <p class="card__content-tag-item">#{{ $shop->region->region }}</p>
+                    <p class="card__content-tag-item">#{{ $shop->genre->genre }}</p>
                 </div>
                 <div class="card__content__detail">
                     <form class="card__content__form" action="/detail" method="get">
@@ -128,12 +123,7 @@
                         <button class="card__button">レビューをみる</button>
                     </form>
                 </div>
-
-
             </div>
-
-
-
         </div>
         @endforeach
     </div>

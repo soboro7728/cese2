@@ -5,13 +5,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ShopController;
-use App\Models\Reservation;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ShopAdminLoginController;
 use App\Http\Controllers\ShopAdminDashboardController;
 use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\GuestController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,15 +25,9 @@ use App\Http\Controllers\GuestController;
 
 Route::middleware('verified')->group(function () {
     Route::get('/mypage', [AuthController::class, 'index']);
-    
 });
 Route::post('/shop/create', [shopController::class, 'shop_create']);
 Route::get('/', [shopController::class, 'index'])->name('index');
-
-
-
-
-Route::get('/test', [shopController::class, 'test']);
 Route::get('/detail', [shopController::class, 'detail']);
 
 // レビュー表示
@@ -89,7 +82,7 @@ Route::prefix('admin')->group(function () {
 
 });
 
-// 追加分
+//店舗管理者分
 Route::prefix('shopadmin')->group(function () {
     Route::get('login', [ShopAdminLoginController::class, 'create'])->name('shopadmin.login');
     Route::post('login', [ShopAdminLoginController::class, 'store']);
@@ -106,8 +99,3 @@ Route::prefix('shopadmin')->group(function () {
 
 // メール認証確認画面
 Route::get('/verify', [AuthController::class, 'verify']);
-// 一般ユーザーむけ
-// Route::middleware('guest')->group(function () {
-//     Route::get('/', [shopController::class, 'index'])->name('guest');
-// });
-

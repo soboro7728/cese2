@@ -17,9 +17,4 @@
 </div>
 <br>
 @endforeach
-
-
-
-
-
 @endsection
