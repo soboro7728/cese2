@@ -1,0 +1,79 @@
+.index__content{
+    width: 90%;
+    margin: 0 auto;
+    max-width: 1500px;
+    min-width: 800px;
+}
+
+
+
+.index__item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.index__card {
+    width: 350px;
+    margin: 10px 0 10px 10px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+
+}
+
+.card__img img {
+    width: 100%;
+}
+
+.card__content {
+    padding: 15px 25px;
+}
+
+.card__content-ttl {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0;
+}
+
+.card__content-cat {
+    padding: 5px 10px;
+    background: #008888;
+    margin-bottom: 15px;
+    display: inline-block;
+    /* 要素の文字数に応じて幅が変更されるためにinline-blockを指定 */
+    color: #fff;
+    font-size: 14px;
+}
+
+.card__content-tag {
+    font-size: 14px;
+    text-align: left;
+}
+
+.card__content-tag-item {
+    display: inline-block;
+}
+
+.card__content__detail{
+    display: flex;
+    margin-bottom:5px;
+}
+.card__content__form{
+    margin-right: 20px;
+}
+.card__content__review {
+    display: flex;
+}
+.card__content__form__review{
+    margin-right: 20px;
+}
+.card__button {
+    background-color: #3560F6;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: none;
+    padding: 5px 10px;
+}
