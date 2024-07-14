@@ -38,7 +38,6 @@ class ShopAdminDashboardController extends Controller
     {
         // name属性が'thumbnail'のinputタグをファイル形式に、画像をpublic/avatarに保存
         $image = $request->file('thumbnail')->store('public/image/');
-        dd($image);
         $image_path = basename($image);
         $auth = Auth::user();
         $shop_id = $auth->shop_id;
@@ -50,7 +49,7 @@ class ShopAdminDashboardController extends Controller
             'detail' => $request->detail,
             'image_path' => $image_path
             ]);
-        return view('shop.thanks');
+        return view('shop.dashboard.complete');
     }
     public function reservation()
     {
