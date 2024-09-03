@@ -6,6 +6,7 @@ use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Reservation;
+use App\Models\Shop;
 use Carbon\Carbon;
 
 class ReviewController extends Controller
@@ -38,5 +39,26 @@ class ReviewController extends Controller
         $shop_id = $request->id;
         $reviews = Review::where('shop_id', $shop_id)->get();
         return view("review", compact('reviews'));
+    }
+    public function post(Request $request)
+    {
+        $shop_id = $request->shop_id;
+        $shop = Shop::where('id', $shop_id)->first();
+        return view("shop.review.post", compact('shop'),);
+    }
+    public function action(Request $request)
+    {
+        $id = Auth::id();
+        $image = $request->file('upload_file')->store('public/image/');
+        $image_path = basename($image);
+        $review = [
+            'user_id' => $id,
+            'shop_id' => $request->shop_id,
+            'stars' => $request->stars,
+            'comment' => $request->comment,
+            'image_path' => $image_path,
+        ];
+        Review::create($review);
+        return view("test", );
     }
 }

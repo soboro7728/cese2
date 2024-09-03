@@ -13,6 +13,7 @@ class Review extends Model
         'shop_id',
         'stars',
         'comment',
+        'image_path',
     ];
 
     public function shop()

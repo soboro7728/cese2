@@ -25,9 +25,10 @@ use App\Http\Controllers\ReviewController;
 
 Route::middleware('verified')->group(function () {
     Route::get('/mypage', [AuthController::class, 'index']);
+    Route::get('/', [shopController::class, 'index'])->name('index');
 });
 Route::post('/shop/create', [shopController::class, 'shop_create']);
-Route::get('/', [shopController::class, 'index'])->name('index');
+
 Route::get('/detail', [shopController::class, 'detail']);
 
 // レビュー表示
@@ -99,3 +100,9 @@ Route::prefix('shopadmin')->group(function () {
 
 // メール認証確認画面
 Route::get('/verify', [AuthController::class, 'verify']);
+
+// 入会テスト用システム
+// レビュー投稿
+Route::get('/review/post', [ReviewController::class, 'post']);
+// 投稿てすと
+Route::post('/review/post/action', [ReviewController::class, 'action']);

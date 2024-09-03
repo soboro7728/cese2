@@ -7,6 +7,14 @@
 @section('content')
 <div class="index__content">
     <div>
+        <form id="submit_form" action="/search/region" method="get">
+            <select onchange="submit(this.form)" name="condition_id">
+                <option value="" selected>並び替え：評価高/低</option>
+                @foreach ($conditions as $condition)
+                <option value="{{ $condition['id'] }}">{{ $condition['condition'] }}</option>
+                @endforeach
+            </select>
+        </form>
         @if(isset($region_id))
         <form id="submit_form" action="/search/region" method="get">
             <select onchange="submit(this.form)" name="region_id">

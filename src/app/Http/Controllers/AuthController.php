@@ -25,7 +25,7 @@ class AuthController extends Controller
         $reservations = Reservation::where('user_id', $auth_id)->whereNull('review')->get();
         $favorites = Favorite::where('user_id', $auth_id)->get();
         $now = Carbon::now();
-        return view('auth.mypage', compact('shops','reservations', 'favorites','regions','genres','auths','now'));
+        return view('auth.mypage', compact('shops','reservations', 'favorites','regions','genres','auths','now',));
     }
 
     public function favorites_create(Request $request)
@@ -61,4 +61,6 @@ class AuthController extends Controller
         favorite::where($cond)->delete();
         return redirect('/mypage');
     }
+    // テスト追加項目
+
 }

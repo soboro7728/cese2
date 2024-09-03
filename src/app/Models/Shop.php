@@ -43,4 +43,9 @@ class Shop extends Model
             $query->where('name', 'like', '%' . $keyword . '%');
         }
     }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
 }

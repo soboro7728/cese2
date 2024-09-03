@@ -10,6 +10,8 @@ use App\Models\User;
 use App\Models\Region;
 use App\Models\Genre;
 use App\Models\Shoptime;
+use App\Models\Condition;
+use App\Models\Review;
 use Illuminate\Support\Facades\DB;
 
 
@@ -57,12 +59,13 @@ class ShopController extends Controller
         // 検索条件
         $cond = ['user_id' => $auth_id,];
         $favorites = Favorite::where($cond)->get();
-        return view("index", compact('shops','favorites','auth_id', 'regions','genres', 'average'));
+        $conditions = Condition::all();
+        return view("index", compact('shops','favorites','auth_id', 'regions','genres', 'average', 'conditions',));
         }
         // 非ログイン
         else{
             $shops = Shop::with('region')->with('genre')->get();
-            return view("index", compact('shops', 'regions', 'genres', 'average'));
+            return view("index", compact('shops', 'regions', 'genres', 'conditions', ));
         }
     }
 
@@ -80,23 +83,41 @@ class ShopController extends Controller
     {
         $region_id = $request->region_id;
         $genre_id = $request->genre_id;
+        $condition_id = $request->condition_id;
+        // dd($condition_id);
         $genres = Genre::all();
         $regions = Region::all();
+        $conditions = Condition::all();
         $auths = Auth::user();
-        $average = DB::table('reviews')
+        $averages = DB::table('reviews')
         ->select('shop_id')
         ->selectRaw('AVG(stars) AS stars')
         // AS starsはカラム名？
         ->groupBy('shop_id')
         ->get();
         // お気に入りの取得
+        // $review = DB::table('shops')
+        // ->join('reviews','reviews.shop_id', '=', 'shops.id'  )
+        // ->get();
+        // dd($review);
+        $orshop = DB::table('shops')
+        ->get();
+        foreach ($averages as $average){
+            $shop_id = $average->shop_id;
+            $test = $orshop
+            ->where('id', $shop_id)
+            ->update(['stars' => '99']);
+            dd($test);
+        }
+        dd($averages);
         if (isset($auths)) {
             $auth_id = $auths->id;
             $shop = Shop::with(['favorite' => function ($query) {
                 $auths = Auth::user();
                 $auth_id = $auths->id;
                 $query->where('user_id', $auth_id);
-            }])->with('region')->with('genre')->get();
+            }])->with('region')->with('genre')
+                ->get();
             $auth_id = $auths->id;
         }
         // 非ログイン
@@ -108,14 +129,12 @@ class ShopController extends Controller
             return redirect('/');
         } elseif (!is_null($region_id) && !is_null($genre_id)) {
             $shops = $shop->where('region_id', "$region_id")->where('genre_id', "$genre_id");
-            return view("index", compact('shops', 'genres', 'regions', 'region_id','genre_id','auth_id', 'average'));
         } elseif (!is_null($region_id)) {
             $shops = $shop->where('region_id', "$region_id");
-            return view("index", compact('shops', 'genres', 'regions', 'region_id','genre_id','auth_id', 'average'));
         } elseif (!is_null($genre_id)) {
             $shops = $shop->where('genre_id', "$genre_id");
-            return view("index", compact('shops', 'genres', 'regions', 'genre_id','region_id','auth_id', 'average'));
         }
+
     }
     public function search_keyword(Request $request)
     {

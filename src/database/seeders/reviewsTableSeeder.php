@@ -15,6 +15,29 @@ class reviewsTableSeeder extends Seeder
      */
     public function run()
     {
-        Review::factory()->count(10)->create();
+        Review::create([
+            'user_id' => '1',
+            'shop_id' => '1',
+            'stars' => '1',
+            'comment' => 'てすと',
+        ]);
+        Review::create([
+            'user_id' => '1',
+            'shop_id' => '2',
+            'stars' => '2',
+            'comment' => 'てすと',
+        ]);
+        Review::create([
+            'user_id' => '1',
+            'shop_id' => '3',
+            'stars' => '3',
+            'comment' => 'てすと',
+        ]);
+        Review::create([
+            'user_id' => '2',
+            'shop_id' => '1',
+            'stars' => '4',
+            'comment' => 'てすと',
+        ]);
     }
 }

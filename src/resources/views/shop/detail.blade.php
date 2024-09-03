@@ -29,6 +29,13 @@
                 <div class="shop__content-detail">
                     <p>{{ $shop->detail }}</p>
                 </div>
+                <form class="shop__review__post" action="/review/post">
+                    @csrf
+                    <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+                    <button class="shop__review__post">
+                        口コミを投稿する
+                    </button>
+                </form>
             </div>
         </div>
         @if(isset($auths))
