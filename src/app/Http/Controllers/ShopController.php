@@ -7,142 +7,157 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Region;
-use App\Models\Genre;
 use App\Models\Shoptime;
+use App\Models\Condition;
+use App\Models\Review;
 use Illuminate\Support\Facades\DB;
 
 
 class ShopController extends Controller
 {
-    //
-    public function shop_register(){
-        $genres = Genre::all();
-        $regions = Region::all();
-        return view('shop.register', compact('genres', 'regions'));
-    }
-    public function shop_create(Request $request)
-    {
-        // name属性が'thumbnail'のinputタグをファイル形式に、画像をpublic/avatarに保存
-        $image = $request->file('thumbnail')->store('public/image/');
-        $image_path = basename($image);
-        $shop = [
-            'name' => $request->name,
-            'region_id' => $request->region_id,
-            'genre_id' => $request->genre_id,
-            'detail' => $request->detail,
-            'image_path' => $image_path
-        ];
-        shop::create($shop);
-        return view('shop.thanks');
-    }
     public function index()
     {
-        $auths = Auth::user();
-        $genres = Genre::all();
-        $regions = Region::all();
+        $regions = Shop::groupBy('region')->get(['region']);
+        $genres = Shop::groupBy('genre')->get(['genre']);
+        $conditions = Condition::all();
         $average = DB::table('reviews')
         ->select('shop_id')
         ->selectRaw('AVG(stars) AS stars')
         // AS starsはカラム名？
         ->groupBy('shop_id')
         ->get();
-        if(isset($auths)){
-        $auth_id = $auths -> id;
-        $shops = Shop::with(['favorite' => function ($query) {
-            $auths = Auth::user();
-            $auth_id = $auths->id;
-            $query->where('user_id', $auth_id);
-        }])->with('region')->with('genre')->get();
-        // 検索条件
-        $cond = ['user_id' => $auth_id,];
-        $favorites = Favorite::where($cond)->get();
-        return view("index", compact('shops','favorites','auth_id', 'regions','genres', 'average'));
+        if (Auth::check()) {
+            $shops = Shop::with(['favorite' => function ($query) {
+                $auth_id = Auth::id();
+                $query->where('user_id', $auth_id);
+            }])->get();
+            // 検索条件
+            $auth_id = Auth::id();
+            $cond = ['user_id' => $auth_id,];
+            $favorites = Favorite::where($cond)->get();
+            return view("index", compact('genres', 'regions', 'conditions', 'shops', 'favorites', 'average', 'auth_id',));
         }
-        // 非ログイン
         else{
-            $shops = Shop::with('region')->with('genre')->get();
-            return view("index", compact('shops', 'regions', 'genres', 'average'));
+            $shops = Shop::all();
+            return view("index", compact('shops', 'regions', 'genres', 'conditions', 'average', ));
         }
     }
 
     public function detail(Request $request)
     {
-        $genres = Genre::all();
-        $regions = Region::all();
-        $shop_id = $request->id;
+        $regions = Shop::groupBy('region')->get(['region']);
+        $genres = Shop::groupBy('genre')->get(['genre']);
+        $shop_id = $request->shop_id;
         $shoptimes = Shoptime::all();
         $auths = Auth::user();
         $shop = Shop::where('id', "$shop_id")->first();
-        return view("shop.detail", compact('shop','auths', 'regions','genres', 'shoptimes'));
-    }
-    public function search_region(Request $request)
-    {
-        $region_id = $request->region_id;
-        $genre_id = $request->genre_id;
-        $genres = Genre::all();
-        $regions = Region::all();
-        $auths = Auth::user();
-        $average = DB::table('reviews')
-        ->select('shop_id')
-        ->selectRaw('AVG(stars) AS stars')
-        // AS starsはカラム名？
-        ->groupBy('shop_id')
-        ->get();
-        // お気に入りの取得
-        if (isset($auths)) {
-            $auth_id = $auths->id;
-            $shop = Shop::with(['favorite' => function ($query) {
-                $auths = Auth::user();
-                $auth_id = $auths->id;
-                $query->where('user_id', $auth_id);
-            }])->with('region')->with('genre')->get();
-            $auth_id = $auths->id;
-        }
-        // 非ログイン
-        else {
-            $shop = Shop::With('region')->with('genre')->get();
-            $auth_id = null;
-        }
-        if (is_null($region_id) && is_null($genre_id)) {
-            return redirect('/');
-        } elseif (!is_null($region_id) && !is_null($genre_id)) {
-            $shops = $shop->where('region_id', "$region_id")->where('genre_id', "$genre_id");
-            return view("index", compact('shops', 'genres', 'regions', 'region_id','genre_id','auth_id', 'average'));
-        } elseif (!is_null($region_id)) {
-            $shops = $shop->where('region_id', "$region_id");
-            return view("index", compact('shops', 'genres', 'regions', 'region_id','genre_id','auth_id', 'average'));
-        } elseif (!is_null($genre_id)) {
-            $shops = $shop->where('genre_id', "$genre_id");
-            return view("index", compact('shops', 'genres', 'regions', 'genre_id','region_id','auth_id', 'average'));
-        }
+        $review = Review::where('user_id', "$auths->id")
+            ->where('shop_id', "$shop_id")
+            ->first();
+        return view("shop.detail", compact('shop','auths', 'regions','genres','shoptimes', 'review'));
     }
     public function search_keyword(Request $request)
     {
-        $genres = Genre::all();
-        $regions = Region::all();
-        $auths = Auth::user();
+        $region = $request->region;
+        $genre = $request->genre;
+        $old_region = $request->region;
+        $old_genre = $request->genre;
+        $condition_id = $request->condition_id;
+        $regions = Shop::groupBy('region')->get(['region']);
+        $genres = Shop::groupBy('genre')->get(['genre']);
+        $conditions = Condition::all();
         $average = DB::table('reviews')
         ->select('shop_id')
         ->selectRaw('AVG(stars) AS stars')
         // AS starsはカラム名？
         ->groupBy('shop_id')
         ->get();
+        $auth = Auth::user();
         // お気に入りの取得
-        if (isset($auths)) {
-            $auth_id = $auths->id;
+        if (isset($auth)) {
+            $auth_id = $auth->id;
             $shops = Shop::with(['favorite' => function ($query) {
-                $auths = Auth::user();
-                $auth_id = $auths->id;
+                $auth = Auth::user();
+                $auth_id = $auth->id;
                 $query->where('user_id', $auth_id);
-            }])->with('region')->with('genre')->KeywordSearch($request->keyword)->get();
-            $auth_id = $auths->id;
+            }])->KeywordSearch($request->keyword)->get();
+            $auth_id = $auth->id;
         }
         // 非ログイン
         else {
-            $shops = Shop::With('region')->with('genre')->KeywordSearch($request->keyword)->get();
+            $shops = Db::table('shop')->KeywordSearch($request->keyword)->get();
             $auth_id = null;
         }
-        return view("index", compact('shops', 'genres', 'regions', 'auth_id', 'average'));
+        return view("index", compact('shops', 'genres', 'regions', 'auth_id', 'average','conditions', 'old_genre','old_region', 'condition_id'));
+        
+    }
+    // テスト
+    public function search(Request $request) {
+        $region = $request->region;
+        $genre = $request->genre;
+        $old_region = $request->region;
+        $old_genre = $request->genre;
+        $regions = Shop::groupBy('region')->get(['region']);
+        $genres = Shop::groupBy('genre')->get(['genre']);
+        $conditions = Condition::all();
+        $average = DB::table('reviews')
+        ->select('shop_id')
+        ->selectRaw('AVG(stars) AS stars')
+        // AS starsはカラム名？
+        ->groupBy('shop_id')
+        ->get();
+        $auth = Auth::user();
+        if (isset($auth)) {
+            $all_shops = Shop::with(['favorite' => function ($query) {
+                $auth_id = Auth::id();
+                $query->where('user_id', $auth_id);
+            }])->get();
+            $auth_id = $auth->id;
+            // 検索条件
+            $cond = ['user_id' => $auth_id,];
+            $favorites = Favorite::where($cond)->get();
+        } else {
+            $all_shops = Shop::all();
+            $auth_id = null;
+            $favorites = null;
+        }
+        foreach($average as $ave){
+            $shop_id = $ave->shop_id;
+            $stars = $ave->stars;
+            $shop =$all_shops->where('id', $shop_id)
+            ->first();
+            $shop['stars']= $stars;
+        }
+        $condition_id = $request->condition_id;
+        if($condition_id == '1'){
+            $cond_shops = $all_shops->shuffle();
+        }elseif($condition_id == '2'){
+            foreach ($all_shops as $shop) {
+                if ($shop->stars == null) {
+                    $shop->stars = 0;
+                }
+            }
+            $cond_shops = $all_shops->sortByDesc('stars')->values();
+        }elseif($condition_id == '3'){
+            foreach ($all_shops as $shop) {
+                if ($shop->stars == null) {
+                    $shop->stars = 65536;
+                }
+            }
+            $cond_shops = $all_shops->sortBy('stars');
+        }else{
+            $cond_shops = $all_shops;
+        }
+
+        if (is_null($region) && is_null($genre)) {
+            $shops = $cond_shops;
+        } elseif (!is_null($region) && !is_null($genre)) {
+            $shops = $cond_shops->where('region', "$region")->where('genre', "$genre");
+        } elseif (!is_null($region)) {
+            $shops = $cond_shops->where('region', "$region");
+        } elseif (!is_null($genre)) {
+            $shops = $cond_shops->where('genre', "$genre");
+        }
+        return view("index", compact('genres', 'regions', 'conditions', 'shops', 'favorites', 'average', 'old_genre', 'old_region', 'condition_id', 'auth_id',));
     }
 }

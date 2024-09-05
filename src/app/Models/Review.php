@@ -13,10 +13,15 @@ class Review extends Model
         'shop_id',
         'stars',
         'comment',
+        'image_path',
     ];
 
     public function shop()
     {
         return $this->belongsTo(Shop::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

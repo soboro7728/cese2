@@ -5,6 +5,7 @@
     margin: auto;
     background-color: cornsilk;
     padding: 20px;
+    margin-bottom: 15px;
 }
 
 .comment__form {
@@ -28,4 +29,7 @@
 .shop_review{
     text-align: center;
     margin-top: 30px;
+}
+.review__img2{
+    max-width: 100%;
 }
