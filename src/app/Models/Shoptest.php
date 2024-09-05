@@ -15,4 +15,8 @@ class Shoptest extends Model
         'detail',
         'image_path'
     ];
+    public function favorite()
+    {
+        return $this->hasone(Favorite::class);
+    }
 }

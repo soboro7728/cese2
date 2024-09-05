@@ -7,26 +7,67 @@
 @section('content')
 <div class="index__content">
     <div>
-        <form id="submit_form" action="/search" method="get">
+        <form id="submit_form" action="/search/region" method="get">
             <select onchange="submit(this.form)" name="condition_id">
                 <option value="" selected>並び替え：評価高/低</option>
                 @foreach ($conditions as $condition)
-                <option value="{{ $condition['id'] }}" @if($condition['id']==$condition_id) selected @endif>{{ $condition['condition'] }}</option>
-                @endforeach
-            </select>
-            <select onchange="submit(this.form)" name="region">
-                <option value="" selected>All area</option>
-                @foreach ($regions as $region)
-                <option value="{{ $region['region'] }}" @if($region['region']==$old_region) selected @endif>{{ $region['region'] }}</option>
-                @endforeach
-            </select>
-            <select onchange="submit(this.form)" name="genre">
-                <option value="" selected>All genre</option>
-                @foreach ($genres as $genre)
-                <option value="{{ $genre['genre'] }}" @if($genre['genre']==$old_genre) selected @endif>{{ $genre['genre'] }}</option>
+                <option value="{{ $condition['id'] }}">{{ $condition['condition'] }}</option>
                 @endforeach
             </select>
         </form>
+        @if(isset($region_id))
+        <form id="submit_form" action="/search/region" method="get">
+            <select onchange="submit(this.form)" name="region_id">
+                <option value="" selected>All area</option>
+                @foreach ($regions as $region)
+                <option value="{{ $region['id'] }}" @if($region['id']==$region_id) selected @endif>{{ $region['region'] }}</option>
+                @endforeach
+            </select>
+            @if(!empty($genre_id))
+            <input type="hidden" name="genre_id" value="{{ $genre_id }}" />
+            @endif
+        </form>
+        @else
+        <form id="submit_form" action="/search/region" method="get">
+            <select onchange="submit(this.form)" name="region_id">
+                <option value="" selected>All area</option>
+                @foreach ($regions as $region)
+                <option value="{{ $region['id'] }}">{{ $region['region'] }}</option>
+                @endforeach
+            </select>
+            @if(!empty($genre_id))
+            <input type="hidden" name="genre_id" value="{{ $genre_id }}" />
+            @endif
+        </form>
+        @endif
+    </div>
+    <!-- 検索 -->
+    <div class="index__search">
+        @if(isset($genre_id))
+        <form id="submit_form" action="/search/region" method="get">
+            <select onchange="submit(this.form)" name="genre_id">
+                <option value="" selected>All genre</option>
+                @foreach ($genres as $genre)
+                <option value="{{ $genre['id'] }}" @if($genre['id']==$genre_id) selected @endif>{{ $genre['genre'] }}</option>
+                @endforeach
+            </select>
+            @if(!empty($region_id))
+            <input type="hidden" name="region_id" value="{{ $region_id }}" />
+            @endif
+        </form>
+        @else
+        <form id="submit_form" action="/search/region" method="get">
+            <select onchange="submit(this.form)" name="genre_id">
+                <option value="" selected>All genre</option>
+                @foreach ($genres as $genre)
+                <option value="{{ $genre['id'] }}">{{ $genre['genre'] }}</option>
+                @endforeach
+            </select>
+            @if(!empty($region_id))
+            <input type="hidden" name="region_id" value="{{ $region_id }}" />
+            @endif
+        </form>
+        @endif
         <form action="/search/keyword" method="get">
             <button>検索</button>
             <input class="search-form__item-input" type="text" name="keyword" value="{{ old('keyword') }}">
@@ -58,13 +99,13 @@
                     星{{ $star }}
                 </div>
                 <div class="card__content-tag">
-                    <p class="card__content-tag-item">#{{ $shop->region }}</p>
-                    <p class="card__content-tag-item">#{{ $shop->genre }}</p>
+                    <p class="card__content-tag-item">#{{ $shop->region->region }}</p>
+                    <p class="card__content-tag-item">#{{ $shop->genre->genre }}</p>
                 </div>
                 <div class="card__content__detail">
                     <form class="card__content__form" action="/detail" method="get">
                         @csrf
-                        <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+                        <input type="hidden" name="id" value="{{ $shop->id }}">
                         <button class="card__button">詳しくみる</button>
                     </form>
                     @if (!isset($auth_id) )

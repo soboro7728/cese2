@@ -11,8 +11,8 @@ class Shop extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'region_id',
-        'genre_id',
+        'region',
+        'genre',
         'detail',
         'image_path'
     ];
@@ -28,14 +28,6 @@ class Shop extends Model
     public function admin()
     {
         return $this->hasone(Admin::class);
-    }
-    public function genre()
-    {
-        return $this->belongsTo(Genre::class);
-    }
-    public function region()
-    {
-        return $this->belongsTo(Region::class);
     }
     public function scopeKeywordSearch($query, $keyword)
     {

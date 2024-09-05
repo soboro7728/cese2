@@ -23,20 +23,42 @@
             </div>
             <div class="shop__content">
                 <div class="shop__content-tag">
-                    <p class="shop__content-tag-item">#{{ $regions[$shop->region_id-1]->region }}</p>
-                    <p class="shop__content-tag-item">#{{ $genres[$shop->genre_id-1]->genre }}</p>
+                    <p class="shop__content-tag-item">#{{ $shop->region }}</p>
+                    <p class="shop__content-tag-item">#{{ $shop->genre }}</p>
                 </div>
                 <div class="shop__content-detail">
                     <p>{{ $shop->detail }}</p>
                 </div>
-                <form class="shop__review__post" action="/review/post">
+
+            </div>
+            @if($review==null)
+            <form class="shop__review__post" action="/review/post">
+                @csrf
+                <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+                <button class="shop__review__post">
+                    口コミを投稿する
+                </button>
+            </form>
+            @else
+            <div class="detail__review">
+                <form class="shop__review__post" method="post" action="/review/delete">
                     @csrf
                     <input type="hidden" name="shop_id" value="{{ $shop->id }}">
                     <button class="shop__review__post">
-                        口コミを投稿する
+                        口コミを削除する
                     </button>
                 </form>
+                <form class="shop__review__post" action="/review/edit">
+                    @csrf
+                    <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+                    <button class="shop__review__post">
+                        口コミを編集する
+                    </button>
+                </form>
+                <span class="star5_rating" data-rate="{{ $review->stars }}"></span>
+                <p class="comment">{{ $review->comment }}</p>
             </div>
+            @endif
         </div>
         @if(isset($auths))
         <div class="reservation">

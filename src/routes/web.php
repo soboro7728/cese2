@@ -79,6 +79,10 @@ Route::prefix('admin')->group(function () {
         Route::post('dashboard/shop/create', [AdminDashboardController::class, 'shop_create']);
         Route::get('dashboard/admin', [AdminDashboardController::class, 'admin']);
         Route::post('dashboard/admin/create', [AdminDashboardController::class, 'admin_create']);
+        Route::get('dashboard/review', [AdminDashboardController::class, 'review']);
+        Route::post('dashboard/review/delete', [AdminDashboardController::class, 'review_delete']);
+        Route::get('dashboard/csv', [AdminDashboardController::class, 'csv']);
+        Route::post('dashboard/csv/import', [AdminDashboardController::class, 'csvImport']);
     });
 
 });
@@ -104,5 +108,15 @@ Route::get('/verify', [AuthController::class, 'verify']);
 // 入会テスト用システム
 // レビュー投稿
 Route::get('/review/post', [ReviewController::class, 'post']);
+// レビュー編集
+Route::get('/review/edit', [ReviewController::class, 'edit']);
+Route::post('/review/post/update', [ReviewController::class, 'update']);
+Route::post('/review/delete', [ReviewController::class, 'delete']);
 // 投稿てすと
 Route::post('/review/post/action', [ReviewController::class, 'action']);
+// 検索テスト
+Route::get('/search', [shopController::class, 'search']);
+
+// てすと
+Route::get('test', [ShopAdminDashboardController::class, 'test']);
+Route::post('/', [ShopAdminDashboardController::class, 'csvImport']);

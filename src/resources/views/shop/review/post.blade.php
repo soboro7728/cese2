@@ -7,13 +7,18 @@
 
 @section('content')
 
-レビュー投稿画面だよ
 <h2 class="shop__content-ttl">
-    {{ $shop->name }}
+    {{ $shop->name }}のレビュー投稿
 </h2>
 
 <div class="review">
-    <p>レビュー</p>
+    @if (count($errors) > 0)
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{$error}}</li>
+        @endforeach
+    </ul>
+    @endif
     <form class="stars" action="/review/post/action" method="post" enctype="multipart/form-data">
         @csrf
         <span>

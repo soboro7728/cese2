@@ -16,10 +16,11 @@ class CreateShopsTable extends Migration
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('region_id')->constrained()->cascadeOnDelete();
-            $table->string('genre_id')->constrained()->cascadeOnDelete();
+            $table->string('region');
+            $table->string('genre');
             $table->string('image_path')->nullable();
             $table->text('detail')->nullable();
+            $table->string('stars')->nullable();
             $table->timestamps();
         });
     }
