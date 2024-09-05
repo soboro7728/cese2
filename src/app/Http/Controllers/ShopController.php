@@ -7,38 +7,14 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Region;
-use App\Models\Genre;
 use App\Models\Shoptime;
 use App\Models\Condition;
 use App\Models\Review;
 use Illuminate\Support\Facades\DB;
-use App\Models\Shoptest;
-use Database\Seeders\shopsTableSeeder;
+
 
 class ShopController extends Controller
 {
-    //
-    // public function shop_register(){
-    //     $genres = Genre::all();
-    //     $regions = Region::all();
-    //     return view('shop.register', compact('genres', 'regions'));
-    // }
-    // public function shop_create(Request $request)
-    // {
-    //     // name属性が'thumbnail'のinputタグをファイル形式に、画像をpublic/avatarに保存
-    //     $image = $request->file('thumbnail')->store('public/image/');
-    //     $image_path = basename($image);
-    //     $shop = [
-    //         'name' => $request->name,
-    //         'region_id' => $request->region_id,
-    //         'genre_id' => $request->genre_id,
-    //         'detail' => $request->detail,
-    //         'image_path' => $image_path
-    //     ];
-    //     shop::create($shop);
-    //     return view('shop.thanks');
-    // }
     public function index()
     {
         $regions = Shop::groupBy('region')->get(['region']);
