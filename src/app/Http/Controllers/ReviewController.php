@@ -94,15 +94,26 @@ class ReviewController extends Controller
             $image = $request->file('upload_file')->store('public/image/');
             $image_path = basename($image);
         }
-        $review = Review::where('user_id', $auth_id)
+        if($request->old_image!=null && $image_path==null){
+            $review = Review::where('user_id', $auth_id)
             ->where('shop_id', $shop_id)
             ->update([
-            'user_id' => $auth_id,
-            'shop_id' => $request->shop_id,
-            'stars' => $request->stars,
-            'comment' => $request->comment,
-            'image_path' => $image_path,
+                'user_id' => $auth_id,
+                'shop_id' => $request->shop_id,
+                'stars' => $request->stars,
+                'comment' => $request->comment,
             ]);
+        }else{
+            $review = Review::where('user_id', $auth_id)
+            ->where('shop_id', $shop_id)
+            ->update([
+                'user_id' => $auth_id,
+                'shop_id' => $request->shop_id,
+                'stars' => $request->stars,
+                'comment' => $request->comment,
+                'image_path' => $image_path,
+            ]);
+        }
         return view("shop.review.complete.edit",);
     }
     public function delete(Request $request)
@@ -119,5 +130,26 @@ class ReviewController extends Controller
             ->where('shop_id', $shop_id)
             ->delete();
         return view("shop.review.complete.delete",);
+    }
+    public function image(Request $request)
+    {
+        $auth_id = Auth::id();
+        $shop_id = $request->shop_id;
+        $image_path = null;
+        $review = Review::where('user_id', $auth_id)
+            ->where('shop_id', $shop_id)
+            ->update([
+                'user_id' => $auth_id,
+                'shop_id' => $request->shop_id,
+                'stars' => $request->stars,
+                'comment' => $request->comment,
+                'image_path' => $image_path,
+            ]);
+        $shop = Shop::where('id', $shop_id)->first();
+        $review = Review::where('shop_id', $shop_id)
+        ->where('user_id', $auth_id)
+        ->with('shop')
+        ->first();
+        return view("shop.review.edit", compact('review', 'shop'));
     }
 }

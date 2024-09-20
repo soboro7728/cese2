@@ -6,31 +6,48 @@
 
 @section('content')
 <div class="index__content">
-    <div>
-        <form id="submit_form" action="/search" method="get">
-            <select onchange="submit(this.form)" name="condition_id">
+    <div class="search">
+        <form class="search__form01" id="submit_form" action="/search" method="get">
+            <select class="search__sort" onchange="submit(this.form)" name="condition_id">
                 <option value="" selected>並び替え：評価高/低</option>
                 @foreach ($conditions as $condition)
+                @if(isset($condition_id))
                 <option value="{{ $condition['id'] }}" @if($condition['id']==$condition_id) selected @endif>{{ $condition['condition'] }}</option>
+                @else
+                <option value="{{ $condition['id'] }}">{{ $condition['condition'] }}</option>
+                @endif
                 @endforeach
-            </select>
-            <select onchange="submit(this.form)" name="region">
-                <option value="" selected>All area</option>
-                @foreach ($regions as $region)
-                <option value="{{ $region['region'] }}" @if($region['region']==$old_region) selected @endif>{{ $region['region'] }}</option>
-                @endforeach
-            </select>
-            <select onchange="submit(this.form)" name="genre">
-                <option value="" selected>All genre</option>
-                @foreach ($genres as $genre)
-                <option value="{{ $genre['genre'] }}" @if($genre['genre']==$old_genre) selected @endif>{{ $genre['genre'] }}</option>
-                @endforeach
+
             </select>
         </form>
-        <form action="/search/keyword" method="get">
-            <button>検索</button>
-            <input class="search-form__item-input" type="text" name="keyword" value="{{ old('keyword') }}">
-        </form>
+        <div>
+            <form class="search" id="submit_form" action="/search" method="get">
+                <select class="search__region" onchange="submit(this.form)" name="region">
+                    <option value="" selected>All area</option>
+                    @foreach ($regions as $region)
+                    @if(isset($old_region))
+                    <option value="{{ $region['region'] }}" @if($region['region']==$old_region) selected @endif>{{ $region['region'] }}</option>
+                    @else
+                    <option value="{{ $region['region'] }}">{{ $region['region'] }}</option>
+                    @endif
+                    @endforeach
+                </select>
+                <select class="search__genre" onchange="submit(this.form)" name="genre">
+                    <option value="" selected>All genre</option>
+                    @foreach ($genres as $genre)
+                    @if(isset($old_genre))
+                    <option value="{{ $genre['genre'] }}" @if($genre['genre']==$old_genre) selected @endif>{{ $genre['genre'] }}</option>
+                    @else
+                    <option value="{{ $genre['genre'] }}">{{ $genre['genre'] }}</option>
+                    @endif
+                    @endforeach
+                </select>
+            </form>
+            <form action="/search/keyword" method="get">
+                <button>検索</button>
+                <input class="search-form__item-input" type="text" name="keyword" value="{{ old('keyword') }}">
+            </form>
+        </div>
     </div>
     <div class="index__item">
         @foreach ($shops as $shop)

@@ -38,7 +38,7 @@
             <br>
             <p2>またはドロッグアンドドロップ</p2>
             <br>
-            <img class="preview__img" id="preview" src="{{ asset('/storage/image/' . $review->image_path) }}" alt="{{$review->image_path}}" style="max-width:200px;" />
+            <img class="preview__img" id="preview" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" style="max-width:200px;">
             <input type="file" name="upload_file" id="input-files" accept='image/*' onchange="previewImage(this);">
         </div>
         <script>
@@ -51,8 +51,6 @@
             }
         </script>
         <input type="hidden" name="shop_id" value="{{ $review->shop_id }}">
-        <input type="hidden" name="old_image" value="{{ $review->image_path }}">
-        <button formaction="image">画像を削除する</button>
         <button>更新する</button>
     </form>
 </div>
