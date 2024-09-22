@@ -2,9 +2,12 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 @endsection
 
 @section('content')
+
+
 <div class="index__content">
     <div class="search">
         <form class="search__form01" id="submit_form" action="/search" method="get">
@@ -12,7 +15,8 @@
                 <option value="" selected>並び替え：評価高/低</option>
                 @foreach ($conditions as $condition)
                 @if(isset($condition_id))
-                <option value="{{ $condition['id'] }}" @if($condition['id']==$condition_id) selected @endif>{{ $condition['condition'] }}</option>
+                <option value="{{ $condition_id }}" @if($condition['id']==$condition_id) selected @endif>{{ $condition['condition'] }}</option>
+                てすと
                 @else
                 <option value="{{ $condition['id'] }}">{{ $condition['condition'] }}</option>
                 @endif
@@ -20,7 +24,7 @@
 
             </select>
         </form>
-        <div>
+        <div class="search__form">
             <form class="search" id="submit_form" action="/search" method="get">
                 <select class="search__region" onchange="submit(this.form)" name="region">
                     <option value="" selected>All area</option>
@@ -42,13 +46,20 @@
                     @endif
                     @endforeach
                 </select>
+                <input type="hidden" name="condition_id" value="{{ $condition_id }}">
             </form>
-            <form action="/search/keyword" method="get">
-                <button>検索</button>
-                <input class="search-form__item-input" type="text" name="keyword" value="{{ old('keyword') }}">
+            <form class="search__keyword" action="/search/keyword" method="get">
+                <button type="submit" class="search__keyword__btn">
+                    <i class="fas fa-search"></i>
+                </button>
+                <input class="search__keyword__form" type="text" name="keyword" value="{{ old('keyword') }}">
+                <input type="hidden" name="condition_id" value="{{ $condition_id }}">
+                <input type="hidden" name="region" value="{{ $old_region }}">
+                <input type="hidden" name="genre" value="{{ $old_genre }}">
             </form>
         </div>
     </div>
+
     <div class="index__item">
         @foreach ($shops as $shop)
         <div class="index__card">
@@ -89,23 +100,19 @@
                     <form class="card__content__form" action="/favorites/create" method="post">
                         @csrf
                         <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-                        <button class="card__button">登録</button>
+                        <button type="submit" class="favorites__button">
+                            <i class="fas fa-heart fa-2x" style="color: grey;"></i>
+                        </button>
                     </form>
                     @else
                     <form class="card__content__form" action="/favorites/delete" method="post">
                         @csrf
                         <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-                        <button class="card__button">解除</button>
+                        <button type="submit" class="favorites__button">
+                            <i class="fas fa-heart fa-2x" style="color: red;"></i>
+                        </button>
                     </form>
                     @endif
-
-                </div>
-                <div class="card__content__review">
-                    <form class="card__content__form__review" action="/review" method="get">
-                        @csrf
-                        <input type="hidden" name="id" value="{{ $shop->id }}">
-                        <button class="card__button">レビューをみる</button>
-                    </form>
                 </div>
             </div>
         </div>

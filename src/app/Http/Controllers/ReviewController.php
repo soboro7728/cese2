@@ -44,8 +44,14 @@ class ReviewController extends Controller
     public function post(Request $request)
     {
         $shop_id = $request->shop_id;
-        $shop = Shop::where('id', $shop_id)->first();
-        return view("shop.review.post", compact('shop'),);
+        $auth_id = Auth::id();
+        $shop = Shop::where('id', $shop_id)
+        ->with(['favorite' => function ($query) {
+            $auth_id = Auth::id();
+            $query->where('user_id', $auth_id);
+        }])
+        ->first();
+        return view("shop.review.post", compact('shop', 'auth_id'),);
     }
     public function action(ReviewRequest $request)
     {

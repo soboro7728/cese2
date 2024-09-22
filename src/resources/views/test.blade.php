@@ -1,3 +1,9 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+
+
 てすと
 <form method="post" action="/" enctype="multipart/form-data">
     @csrf
@@ -6,10 +12,8 @@
     <input type="submit"></input>
 </form>
 <a href="/">戻る</a>
-@if (count($upload_error_list) > 0)
-<ul>
-    @foreach ($upload_error_list as $error)
-    <li>{{$error}}</li>
-    @endforeach
-</ul>
-@endif
+// 赤色ハートのアイコンを表示
+<p>いいね<i class="fas fa-heart" style="color: red;"></i></p>
+
+// ダウンロードアイコンを表示
+<p>csvダウンロード<i class="fas fa-download"></i></p>

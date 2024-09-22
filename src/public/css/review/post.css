@@ -1,3 +1,132 @@
+.content {
+    width: 95%;
+    margin: 0 auto;
+    /* min-width: 769px; */
+    display: flex;
+    justify-content: space-between;
+}
+
+.review__guide{
+    width: 40%;
+    margin-top: 70px;
+    height: 60%;
+    border-right: 1px solid #B7B7B7;
+}
+.review__guide__ttl{
+    width: 70%;
+    margin: 0 auto;
+}
+.review__guide__txt{
+    text-align: left;
+    font-size: 30px;
+}
+.index__item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.index__card {
+    max-width: 350px;
+    width: 90%;
+    margin: 0 auto;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    border-radius: 10px;
+    margin: 0 auto;
+
+}
+.card__img img {
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+}
+
+.card__content {
+    padding: 15px 25px;
+}
+
+.card__content-ttl {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0;
+}
+.card__content-tag {
+    font-size: 14px;
+    text-align: left;
+}
+.card__content-tag-item {
+    display: inline-block;
+}
+.card__content__form {
+    margin-right: 20px;
+}
+.card__button {
+    background-color: #3560F6;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: none;
+    padding: 5px 10px;
+}
+.favorites__button {
+    height: 100%;
+    border: none;
+    background-color: white;
+}
+.card__content__detail {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+
+.review__post {
+    width: 60%;
+    padding: 0 50px;
+}
+.comment__form{
+    width: 100%;
+    height: 100px;
+}
+.comment__form__alt{
+    text-align: right;
+}
+
+.upload-area__text1{
+    font-size:larger;
+}
+.upload-area__image{
+    max-width: 40%;
+}
+.upload-area {
+    margin: auto;
+    width: 100%;
+    height: 150px;
+    position: relative;
+    text-align: center;
+    background-color: #fff;
+    border: 1px dotted rgba(0, 0, 0, .4);
+}
+.review__post__btn {
+    border-radius: 20px;
+    margin: 32px auto 0;
+    padding: 10px;
+    width: 30%;
+    display: block;
+    background: white;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+}
+.btnera {
+    text-align: center;
+    width: 95%;
+    margin: 0 auto;
+}
+
 .stars span {
     display: flex;
     /* 要素をフレックスボックスにする */
@@ -26,25 +155,8 @@
 .stars label:hover,
 .stars label:hover~label,
 .stars input[type='radio']:checked~label {
-    color: #F8C601;
+    color: #3560F6;
     /* 選択された星以降をすべて黄色にする */
-}
-
-form {
-    margin: 50px auto;
-    width: 800px;
-    height: 400px;
-    box-shadow: 0 0 2px #3e3e3e;
-    padding: 30px;
-    text-align: center;
-}
-
-.upload-area {
-    margin: auto;
-    width: 85%;
-    height: 300px;
-    position: relative;
-    border: 1px dotted rgba(0, 0, 0, .4);
 }
 
 .upload-area i {
@@ -63,7 +175,7 @@ form {
     opacity: .8;
 }
 .preview__img{
-    max-height: 80%;
+    max-height: 50%;
 }
 
 #input-files {
@@ -97,3 +209,40 @@ form {
     top: 5px;
     box-shadow: none;
 }
+@media screen and (max-width: 480px) {
+    .content{
+        display: block;
+    }
+    .review__guide{
+        width: 100%;
+        border-right: none;
+    }
+    .review__post{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .review__post__btn{
+        width: 100%;
+    }
+}
+@media screen and (max-width: 768px) {
+    .content {
+            display: block;
+        }
+    
+        .review__guide {
+            width: 100%;
+            border-right: none;
+            margin-bottom: 20px;
+        }
+    
+        .review__post {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+    
+        .review__post__btn {
+            width: 100%;
+        }
+}
+

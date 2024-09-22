@@ -8,7 +8,7 @@
 @section('content')
 
 
-<div class="review">
+<div class="review__post">
     <h2 class="shop__content-ttl">
         {{ $shop->name }}のレビュー投稿
     </h2>

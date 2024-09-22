@@ -32,37 +32,49 @@
 
             </div>
             @if($review==null)
-            <form class="shop__review__post" action="/review/post">
-                @csrf
-                <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-                <button class="shop__review__post">
-                    口コミを投稿する
-                </button>
-            </form>
+            <div>
+                <form class="shop__review__post" action="/review/post">
+                    @csrf
+                    <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+                    <button class="shop__review__post__btn">
+                        口コミを投稿する
+                    </button>
+                </form>
+            </div>
             @else
-            <div class="detail__review">
-                <form class="shop__review__post" method="post" action="/review/delete">
+            <div class="card__content__review">
+                <form class="card__content__form__review" action="/review" method="get">
                     @csrf
-                    <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-                    <button class="shop__review__post">
-                        口コミを削除する
-                    </button>
+                    <input type="hidden" name="id" value="{{ $shop->id }}">
+                    <button class="card__button">全ての口コミ情報</button>
                 </form>
-                <form class="shop__review__post" action="/review/edit">
-                    @csrf
-                    <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-                    <button class="shop__review__post">
-                        口コミを編集する
-                    </button>
-                </form>
-                <span class="star5_rating" data-rate="{{ $review->stars }}"></span>
-                <p class="comment">{{ $review->comment }}</p>
+            </div>
+            <div class="review__view">
+                <div class="review__view__link">
+                    <form class="shop__review__post" action="/review/edit">
+                        @csrf
+                        <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+                        <button class="shop__review__post__btn-edit">
+                            口コミを編集する
+                        </button>
+                    </form>
+                    <form class="shop__review__post" method="post" action="/review/delete">
+                        @csrf
+                        <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+                        <button class="shop__review__post__btn-edit">
+                            口コミを削除する
+                        </button>
+                    </form>
+                </div>
+                <div class="detail__review">
+                    <span class="star5_rating" data-rate="{{ $review->stars }}"></span>
+                    <p class="comment">{{ $review->comment }}</p>
+                </div>
             </div>
             @endif
         </div>
         @if(isset($auths))
         <div class="reservation">
-
             <div class="reservation__panel">
                 <h2 class="reservation__ttl">予約</h2>
                 <form action="/shop/confirm" method="post">
@@ -92,10 +104,8 @@
                         @endforeach
                     </ul>
                     @endif
-                    <button class="reservation__panel__button">登録</button>
+                    <button class="reservation__panel__button">予約する</button>
                 </form>
-
-
             </div>
         </div>
     </div>
