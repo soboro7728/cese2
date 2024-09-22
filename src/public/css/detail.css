@@ -9,8 +9,7 @@
 
 .detail__content {
     width: 95%;
-    margin: 0 50px;
-    min-width: 1500px;
+    margin: 0 auto;
 }
 
 .reservation {
@@ -30,6 +29,8 @@
 
 .shop__content-tag-item {
     display: inline-block;
+    margin-top: 25px;
+    font-weight: bold
     /* 横並びにするためにinline-blockを指定 */
 }
 
@@ -66,7 +67,7 @@
     font-size: 20px;
     border: none;
     box-shadow: none;
-    padding: 5px 10px;
+    padding: 20px 10px;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -109,6 +110,7 @@
     display: inline-block;
     white-space: nowrap;
     color: #CCCCCC;
+    font-size: 30px;
     /* グレーカラー 自由に設定化 */
     /*font-size: 30px; フォントサイズ 自由に設定化 */
 }
@@ -125,7 +127,7 @@
     left: 0;
     overflow: hidden;
     white-space: nowrap;
-    color: #ffcf32;
+    color: #003FF5;
     /* イエローカラー 自由に設定化 */
 }
 
@@ -184,3 +186,56 @@
 }
 
 /* 星0 */
+
+.shop__review__post__btn{
+    border: none;
+    border-bottom: 1px solid #333;
+    font-size: 15px;
+}
+.shop__content-detail{
+    font-weight: bold;
+    font-size: 15px;
+}
+.shop__review__post__btn {
+    border: none;
+    border-bottom: 1px solid #333;
+    font-size: 15px;
+}
+.shop__review__post__btn-edit {
+    border: none;
+    border-bottom: 1px solid #333;
+    font-size: 15px;
+    margin-left: 10px;
+}
+.review__view{
+    padding: 10px 0;
+    margin-bottom: 10px;
+    border-top: 1px solid #B7B7B7;
+    border-bottom: 1px solid #B7B7B7;
+}
+.review__view__link{
+    display: flex;
+    justify-content: flex-end;
+}
+.card__button{
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: #5580F7;
+    color: #fff;
+    border: none;
+    padding: 10px;
+}
+
+@media screen and (max-width: 480px) {
+    .detail__content__inner {
+            display: block;
+        }
+        .reservation {
+            background-color: #3560F6;
+            width: 100%;
+                margin-top: 10px;
+        }
+        .shop{
+            width: 100%;
+        }
+}

@@ -12,7 +12,6 @@
     @endforeach
 </ul>
 @endif
-
 <form class="review" action="/review/create" method="post">
     @csrf
     <h3>{{ $reservation->shop->name }}のレビュー投稿</h3>

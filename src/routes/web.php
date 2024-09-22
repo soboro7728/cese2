@@ -82,7 +82,7 @@ Route::prefix('admin')->group(function () {
         Route::get('dashboard/review', [AdminDashboardController::class, 'review']);
         Route::post('dashboard/review/delete', [AdminDashboardController::class, 'review_delete']);
         Route::get('dashboard/csv', [AdminDashboardController::class, 'csv']);
-        Route::post('dashboard/csv/import', [AdminDashboardController::class, 'csvImport']);
+        Route::post('dashboard/csv', [AdminDashboardController::class, 'csvImport']);
     });
 
 });
@@ -112,6 +112,7 @@ Route::get('/review/post', [ReviewController::class, 'post']);
 Route::get('/review/edit', [ReviewController::class, 'edit']);
 Route::post('/review/post/update', [ReviewController::class, 'update']);
 Route::post('/review/delete', [ReviewController::class, 'delete']);
+Route::post('/review/image', [ReviewController::class, 'image']);
 // 投稿てすと
 Route::post('/review/post/action', [ReviewController::class, 'action']);
 // 検索テスト
