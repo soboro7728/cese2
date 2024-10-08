@@ -46,16 +46,24 @@
                     @endif
                     @endforeach
                 </select>
+                @if(isset($condition_id))
                 <input type="hidden" name="condition_id" value="{{ $condition_id }}">
+                @endif
             </form>
             <form class="search__keyword" action="/search/keyword" method="get">
                 <button type="submit" class="search__keyword__btn">
                     <i class="fas fa-search"></i>
                 </button>
                 <input class="search__keyword__form" type="text" name="keyword" value="{{ old('keyword') }}">
+                @if(isset($condition_id))
                 <input type="hidden" name="condition_id" value="{{ $condition_id }}">
+                @endif
+                @if(isset($old_region))
                 <input type="hidden" name="region" value="{{ $old_region }}">
+                @endif
+                @if(isset($old_genre))
                 <input type="hidden" name="genre" value="{{ $old_genre }}">
+                @endif
             </form>
         </div>
     </div>

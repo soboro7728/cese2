@@ -59,28 +59,28 @@
                 @foreach ($favorites as $favorite)
                 <div class="card">
                     <div class="card__img">
-                        <img src="{{ asset('/storage/image/' . $shops[$favorite->shop_id-1]->image_path) }}" alt="{{$shops[$favorite->shop_id-1]->image_path}}" />
+                        <img src="{{ asset('/storage/image/' . $favorite->shop->image_path) }}" alt="{{ $favorite->shop->image_path}}" />
                     </div>
                     <div class="card__content">
                         @php
                         $favorite_shop = $shops[$favorite->shop_id-1]
                         @endphp
                         <h2 class="card__content-ttl">
-                            {{ $favorite_shop->name }}
+                            {{ $favorite->shop->name }}
                         </h2>
                         <div class="card__content-tag">
-                            <p class="card__content-tag-item">#{{ $regions[$favorite_shop->region_id]->region }}</p>
-                            <p class="card__content-tag-item">#{{ $genres[$favorite_shop->genre_id]->genre }}</p>
+                            <p class="card__content-tag-item">#{{ $favorite->shop->region }}</p>
+                            <p class="card__content-tag-item">#{{ $favorite->shop->genre }}</p>
                         </div>
                         <div class="card__content__form">
                             <form class="card__content__form-item" action="/detail" method="get">
                                 @csrf
-                                <input type="hidden" name="id" value="{{ $shops[$favorite->shop_id-1]->id }}">
+                                <input type="hidden" name="shop_id" value="{{ $favorite->shop->id }}">
                                 <button class="date-nav__button">詳しくみる</button>
                             </form>
                             <form class="card__content__form-item" action="/favorites/delete/mypage" method="post">
                                 @csrf
-                                <input type="hidden" name="shop_id" value="{{ $favorite->shop_id }}">
+                                <input type="hidden" name="shop_id" value="{{ $favorite->shop->id }}">
                                 <button class="card__button">解除</button>
                             </form>
                         </div>

@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Support\Facades\Auth;
 use App\Actions\Admin\AttemptToAuthenticate;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Fortify\Contracts\LogoutResponse;
 
 class AdminLoginServiceProvider extends ServiceProvider
 {

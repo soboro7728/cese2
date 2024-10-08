@@ -18,14 +18,14 @@ class AuthController extends Controller
     public function index()
     {
         $auths = Auth::user();
-        $regions = Region::all();
-        $genres = Genre::all();
         $auth_id = $auths->id;
         $shops = Shop::all();
         $reservations = Reservation::where('user_id', $auth_id)->whereNull('review')->get();
-        $favorites = Favorite::where('user_id', $auth_id)->get();
+        $favorites = Favorite::where('user_id', $auth_id)
+            ->with('shop')
+            ->get();
         $now = Carbon::now();
-        return view('auth.mypage', compact('shops','reservations', 'favorites','regions','genres','auths','now',));
+        return view('auth.mypage', compact('shops','reservations', 'favorites','auths','now',));
     }
 
     public function favorites_create(Request $request)
